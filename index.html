@@ -117,6 +117,12 @@
             text-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
 
+        /* Creator Credit Glow & Pulse */
+        .text-glow-subtle {
+            color: #fcf6ba; /* lightgold */
+            text-shadow: 0 0 8px rgba(252, 246, 186, 0.4);
+        }
+
         /* Magic Circle */
         .rune-ring {
             position: absolute;
@@ -137,7 +143,7 @@
             left: 50%;
             margin-left: -45px; 
             transform-origin: 50% 150%; 
-            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s ease;
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease; /* Added box-shadow and border-color transition */
             cursor: pointer;
             z-index: 10;
         }
@@ -174,12 +180,12 @@
             100% { transform: translateX(100%) rotate(45deg); }
         }
 
-        /* Hover effect in spread */
+        /* Hover effect in spread - ENHANCED FOR QUALITY INTERACTION */
         .spread-active .card-base:hover {
             transform: translateY(-40px) scale(1.15) !important;
             z-index: 100;
-            border-color: #d4af37;
-            box-shadow: 0 0 25px rgba(212, 175, 55, 0.6);
+            border-color: #fcf6ba; /* Light Gold for high contrast */
+            box-shadow: 0 0 35px rgba(212, 175, 55, 0.9); /* Stronger glow */
         }
         
         /* Specialized Animation Class for Spinning Card */
@@ -469,8 +475,8 @@
                             </button>
                         </div>
 
-                        <!-- CREATOR CREDIT -->
-                        <div class="mt-8 mb-4 text-[9px] text-purple-500/30 text-center font-display tracking-[0.3em] uppercase" id="creator-credit">
+                        <!-- CREATOR CREDIT (Updated with glow and pulse) -->
+                        <div class="mt-8 mb-4 text-[9px] text-center font-display tracking-[0.3em] uppercase text-glow-subtle animate-pulse-slow" id="creator-credit">
                             <!-- Injected by JS -->
                         </div>
                     </div>
@@ -481,7 +487,7 @@
     </div>
 
     <script>
-        /* --- Data: Rich Translations --- */
+        /* --- Data: Rich Translations (Chinese content retained for display) --- */
         const i18n = {
             en: {
                 verify: "Verifying Soul Signature...",
@@ -727,7 +733,7 @@
             const t = i18n[state.lang] || i18n.en;
 
             scanner.classList.remove('hidden');
-            text.innerHTML = `<span class="animate-pulse text-purple-200">${i18n.en.verify}</span>`;
+            text.innerHTML = `<span class="animate-pulse text-purple-200">${t.verify}</span>`; /* Use translated verify text */
             text.classList.add('text-shadow-glow');
             
             // Verification simulated delay
@@ -735,7 +741,7 @@
             
             text.classList.add('text-gold');
             text.classList.remove('text-purple-400');
-            text.innerHTML = `<i class="fa-solid fa-check-circle"></i> ${i18n.en.verified}`;
+            text.innerHTML = `<i class="fa-solid fa-check-circle"></i> ${t.verified}`; /* Use translated verified text */
             scanner.classList.add('hidden');
             
             await new Promise(r => setTimeout(r, 800));
@@ -748,13 +754,18 @@
             container.innerHTML = '';
             
             const languages = [
-                {code: 'en', name: 'English', sub: 'Universal'},
                 {code: 'zh', name: '中文', sub: 'Chinese'},
+                {code: 'en', name: 'English', sub: 'Universal'},
                 {code: 'kr', name: '한국어', sub: 'Korean'},
                 {code: 'jp', name: '日本語', sub: 'Japanese'},
                 {code: 'fr', name: 'Français', sub: 'French'},
                 {code: 'es', name: 'Español', sub: 'Spanish'},
             ];
+
+            // Set default language to Chinese if it hasn't been set
+            if (!state.lang || !i18n[state.lang]) {
+                state.lang = 'zh';
+            }
 
             languages.forEach(l => {
                 const btn = document.createElement('button');
@@ -804,7 +815,7 @@
             document.getElementById('fan-container').innerHTML = '';
             document.getElementById('reveal-stage').classList.add('hidden');
             document.getElementById('table-instruction').textContent = i18n[state.lang].instruction_deck;
-            document.getElementById('table-sub').textContent = "...";
+            document.getElementById('table-sub').textContent = i18n[state.lang].instruction_deck; // Initial instruction is "Tap to shuffle/洗牌"
             document.getElementById('btn-reset-label').textContent = i18n[state.lang].btn_reset;
             
             switchScreen('screen-category', 'screen-table');
@@ -824,11 +835,11 @@
 
             // Show fan container
             fanContainer.classList.remove('opacity-0', 'pointer-events-none');
-            fanContainer.classList.add('spread-active');
+            fanContainer.classList.add('spread-active'); // Add class for hover effect
 
-            // Update text
+            // Update text to instruct drawing
             instruction.textContent = i18n[state.lang].instruction_spread;
-            sub.textContent = "";
+            sub.textContent = i18n[state.lang].instruction_spread;
 
             // App Size Config
             const totalCards = 22;
@@ -836,31 +847,38 @@
             
             for(let i=0; i<totalCards; i++) {
                 const card = document.createElement('div');
-                card.className = 'card-base animate-float';
-                // random slight float delay
-                card.style.animationDelay = `${Math.random() * 2}s`;
+                card.className = 'card-base'; // Removed animate-float to keep them fixed
                 
                 const progress = i / (totalCards - 1);
                 const angle = -angleRange/2 + (progress * angleRange);
                 const xOffset = (progress - 0.5) * 200; 
                 const yOffset = Math.abs(progress - 0.5) * 30;
 
+                // Set initial position far below
                 card.style.transform = `translateX(0px) translateY(100px) rotate(0deg)`;
                 card.innerHTML = `<div class="card-pattern-bg"></div>`;
                 
+                // Use a closure to capture the card index for unique interaction if needed
                 card.onclick = (e) => onCardClick(e, card);
 
                 fanContainer.appendChild(card);
 
+                // Animate to spread position
                 setTimeout(() => {
                     card.style.transform = `translateX(${xOffset}px) translateY(${yOffset}px) rotate(${angle}deg)`;
                 }, 50 + (i * 30));
             }
+
+            // After spreading, enable pointer events on the cards
+            fanContainer.style.pointerEvents = 'auto'; 
         }
 
         function onCardClick(e, element) {
             e.stopPropagation();
             
+            // Disable further clicks
+            document.getElementById('fan-container').style.pointerEvents = 'none';
+
             // 1. Pick Data
             const randomCard = tarotData[Math.floor(Math.random() * tarotData.length)];
             const isUpright = Math.random() > 0.4; // 60% chance upright
@@ -878,6 +896,7 @@
             // 3. SPECIAL SPIN ANIMATION
             // Remove transform logic that bound it to the fan and let class handle it
             element.style.transform = "none"; 
+            element.classList.remove('spread-active'); // Remove hover effect
             element.classList.add('card-spinning');
 
             // 4. Burst Effect & Swap after spin
@@ -1029,6 +1048,11 @@
                 void toEl.offsetWidth;
                 toEl.classList.add('animate-fade-in');
             }, 500);
+        }
+
+        // Set default language to Chinese on initial load if not set
+        if (!state.lang || !i18n[state.lang]) {
+            state.lang = 'zh';
         }
 
         window.onload = initStars;
