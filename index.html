@@ -1,1062 +1,1347 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Lumina Oracle - Ultimate Edition</title>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;800&family=Lato:wght@300;400&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Noto+Serif+SC:wght@300;500;700&family=Noto+Serif+KR:wght@300;500;700&display=swap" rel="stylesheet">
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        mystic: {
-                            950: '#030105',
-                            900: '#0a0510',
-                            800: '#150826',
-                            700: '#2d1b4e',
-                            600: '#4c2a85',
-                            500: '#7b42f6',
-                            gold: '#d4af37',
-                            lightgold: '#fcf6ba',
-                        }
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <title>Lumina Oracle - Ultimate Edition</title>
+        <!-- Google Fonts -->
+        <link
+            href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;800&family=Lato:wght@300;400&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Noto+Serif+SC:wght@300;500;700&family=Noto+Serif+KR:wght@300;500;700&display=swap"
+            rel="stylesheet"
+        />
+        <!-- Tailwind CSS -->
+        <script src="https://cdn.tailwindcss.com"></script>
+        <!-- FontAwesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: {
+                            mystic: {
+                                950: "#030105",
+                                900: "#0a0510",
+                                800: "#150826",
+                                700: "#2d1b4e",
+                                600: "#4c2a85",
+                                500: "#7b42f6",
+                                gold: "#d4af37",
+                                lightgold: "#fcf6ba",
+                            },
+                        },
+                        fontFamily: {
+                            serif: ["Playfair Display", "Noto Serif SC", "Noto Serif KR", "serif"],
+                            display: ["Cinzel", "Noto Serif SC", "Noto Serif KR", "serif"],
+                            sans: ["Lato", "sans-serif"],
+                        },
+                        animation: {
+                            "pulse-slow": "pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+                            "spin-slow": "spin 12s linear infinite",
+                            "spin-reverse": "spin 15s linear infinite reverse",
+                            float: "float 6s ease-in-out infinite",
+                            "fade-in": "fadeIn 0.8s ease-out forwards",
+                            "zoom-in": "zoomIn 0.5s ease-out forwards",
+                            glow: "glow 2s ease-in-out infinite alternate",
+                            "mystic-spin": "mysticSpin 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards",
+                        },
+                        keyframes: {
+                            fadeIn: {
+                                "0%": { opacity: 0, transform: "translateY(10px)" },
+                                "100%": { opacity: 1, transform: "translateY(0)" },
+                            },
+                            zoomIn: {
+                                "0%": { opacity: 0, transform: "scale(0.9)" },
+                                "100%": { opacity: 1, transform: "scale(1)" },
+                            },
+                            glow: {
+                                "0%": { boxShadow: "0 0 5px rgba(212,175,55,0.2)" },
+                                "100%": { boxShadow: "0 0 20px rgba(212,175,55,0.6)" },
+                            },
+                            float: {
+                                "0%, 100%": { transform: "translateY(0)" },
+                                "50%": { transform: "translateY(-10px)" },
+                            },
+                            mysticSpin: {
+                                "0%": { transform: "translate(-50%, -50%) scale(1) rotateY(0deg)" },
+                                "60%": {
+                                    transform: "translate(-50%, -180px) scale(1.2) rotateY(720deg)",
+                                    boxShadow: "0 0 50px rgba(212,175,55,0.6)",
+                                },
+                                "100%": {
+                                    transform: "translate(-50%, -180px) scale(1.2) rotateY(1080deg)",
+                                    boxShadow: "0 0 80px rgba(212,175,55,0.9)",
+                                },
+                            },
+                        },
                     },
-                    fontFamily: {
-                        serif: ['Playfair Display', 'Noto Serif SC', 'Noto Serif KR', 'serif'],
-                        display: ['Cinzel', 'Noto Serif SC', 'Noto Serif KR', 'serif'],
-                        sans: ['Lato', 'sans-serif'],
-                    },
-                    animation: {
-                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'spin-slow': 'spin 12s linear infinite',
-                        'spin-reverse': 'spin 15s linear infinite reverse',
-                        'float': 'float 6s ease-in-out infinite',
-                        'fade-in': 'fadeIn 0.8s ease-out forwards',
-                        'zoom-in': 'zoomIn 0.5s ease-out forwards',
-                        'glow': 'glow 2s ease-in-out infinite alternate',
-                        'mystic-spin': 'mysticSpin 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards',
-                    },
-                    keyframes: {
-                        fadeIn: {
-                            '0%': { opacity: 0, transform: 'translateY(10px)' },
-                            '100%': { opacity: 1, transform: 'translateY(0)' },
-                        },
-                        zoomIn: {
-                            '0%': { opacity: 0, transform: 'scale(0.9)' },
-                            '100%': { opacity: 1, transform: 'scale(1)' },
-                        },
-                        glow: {
-                            '0%': { boxShadow: '0 0 5px rgba(212,175,55,0.2)' },
-                            '100%': { boxShadow: '0 0 20px rgba(212,175,55,0.6)' },
-                        },
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-10px)' },
-                        },
-                        mysticSpin: {
-                            '0%': { transform: 'translate(-50%, -50%) scale(1) rotateY(0deg)' },
-                            '60%': { transform: 'translate(-50%, -180px) scale(1.2) rotateY(720deg)', boxShadow: '0 0 50px rgba(212,175,55,0.6)' },
-                            '100%': { transform: 'translate(-50%, -180px) scale(1.2) rotateY(1080deg)', boxShadow: '0 0 80px rgba(212,175,55,0.9)' }
-                        }
-                    }
+                },
+            };
+        </script>
+        <style>
+            body {
+                background-color: #030105;
+                color: #e2e8f0;
+                overflow: hidden;
+                font-family: "Lato", "Noto Serif SC", "Noto Serif KR", sans-serif;
+                height: 100vh;
+                width: 100vw;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            /* Ambient Nebula Background */
+            .nebula-bg {
+                position: absolute;
+                inset: 0;
+                background: radial-gradient(circle at 20% 30%, rgba(76, 42, 133, 0.15) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 70%, rgba(45, 27, 78, 0.2) 0%, transparent 50%);
+                filter: blur(40px);
+                z-index: 0;
+            }
+
+            /* Phone Frame on Desktop */
+            #app {
+                background: linear-gradient(180deg, #0a0510 0%, #030105 100%);
+                box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.8);
+            }
+
+            /* Premium Glassmorphism */
+            .glass-panel {
+                background: rgba(20, 10, 35, 0.4);
+                backdrop-filter: blur(16px);
+                -webkit-backdrop-filter: blur(16px);
+                border: 1px solid rgba(212, 175, 55, 0.1);
+                border-top: 1px solid rgba(212, 175, 55, 0.2);
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+            }
+
+            .gold-gradient-text {
+                background: linear-gradient(to bottom, #fcf6ba 0%, #bf953f 40%, #b38728 60%, #aa771c 100%);
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent;
+                text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            }
+
+            /* Creator Credit Glow & Pulse */
+            .text-glow-subtle {
+                color: #fcf6ba; /* lightgold */
+                text-shadow: 0 0 8px rgba(252, 246, 186, 0.4);
+            }
+
+            /* Magic Circle */
+            .rune-ring {
+                position: absolute;
+                border: 1px dashed rgba(212, 175, 55, 0.3);
+                border-radius: 50%;
+            }
+
+            /* Card 3D Styles */
+            .card-base {
+                width: 90px;
+                height: 154px;
+                background: #111;
+                border: 1px solid #333;
+                border-radius: 8px;
+                box-shadow: -4px 4px 12px rgba(0, 0, 0, 0.8);
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                margin-left: -45px;
+                transform-origin: 50% 150%;
+                transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s ease, box-shadow 0.4s ease,
+                    border-color 0.4s ease; /* Added box-shadow and border-color transition */
+                cursor: pointer;
+                z-index: 10;
+            }
+
+            .card-pattern-bg {
+                width: 100%;
+                height: 100%;
+                border-radius: 7px;
+                background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20.5V18h2v2.5h-2zM20 18V0h-2v18h-8v2h8v18h2V20h8v-2h-8z' fill='%23583594' fill-opacity='0.15' fill-rule='evenodd'/%3E%3C/svg%3E");
+                background-color: #0d0616;
+                border: 1px solid rgba(212, 175, 55, 0.25); /* More texture on border */
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+                overflow: hidden;
+                box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+            }
+
+            /* Holographic Shimmer on Card Back */
+            .card-pattern-bg::before {
+                content: "";
+                position: absolute;
+                top: -50%;
+                left: -50%;
+                width: 200%;
+                height: 200%;
+                background: linear-gradient(
+                    45deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.08),
+                    transparent
+                ); /* Slightly stronger shimmer */
+                transform: rotate(45deg);
+                animation: shimmer 3s infinite linear;
+            }
+            @keyframes shimmer {
+                0% {
+                    transform: translateX(-100%) rotate(45deg);
+                }
+                100% {
+                    transform: translateX(100%) rotate(45deg);
                 }
             }
-        }
-    </script>
-    <style>
-        body {
-            background-color: #030105;
-            color: #e2e8f0;
-            overflow: hidden;
-            font-family: 'Lato', 'Noto Serif SC', 'Noto Serif KR', sans-serif;
-            height: 100vh;
-            width: 100vw;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
 
-        /* Ambient Nebula Background */
-        .nebula-bg {
-            position: absolute;
-            inset: 0;
-            background: 
-                radial-gradient(circle at 20% 30%, rgba(76, 42, 133, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(45, 27, 78, 0.2) 0%, transparent 50%);
-            filter: blur(40px);
-            z-index: 0;
-        }
+            /* Hover effect in spread - ENHANCED FOR QUALITY INTERACTION */
+            .spread-active .card-base:hover {
+                transform: translateY(-40px) scale(1.15) !important;
+                z-index: 100;
+                border-color: #fcf6ba; /* Light Gold for high contrast */
+                box-shadow: 0 0 35px rgba(212, 175, 55, 0.9); /* Stronger glow */
+            }
 
-        /* Phone Frame on Desktop */
-        #app {
-            background: linear-gradient(180deg, #0a0510 0%, #030105 100%);
-            box-shadow: inset 0 0 50px rgba(0,0,0,0.8);
-        }
+            /* Specialized Animation Class for Spinning Card */
+            .card-spinning {
+                position: absolute !important;
+                bottom: 50% !important; /* Move to middle visually initially */
+                left: 50% !important;
+                margin-left: -45px !important;
+                transform-origin: center center !important;
+                animation: mystic-spin 1.8s cubic-bezier(0.45, 0, 0.55, 1) forwards !important;
+                z-index: 999 !important;
+                pointer-events: none;
+            }
 
-        /* Premium Glassmorphism */
-        .glass-panel {
-            background: rgba(20, 10, 35, 0.4);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(212, 175, 55, 0.1);
-            border-top: 1px solid rgba(212, 175, 55, 0.2);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
-        }
+            /* Reveal Animation */
+            .tarot-card-reveal {
+                width: 100%;
+                height: 100%;
+                position: relative;
+                transform-style: preserve-3d;
+                transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            }
+            .tarot-card-reveal.flipped {
+                transform: rotateY(180deg);
+            }
+            .reveal-face {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                backface-visibility: hidden;
+                border-radius: 12px;
+                overflow: hidden;
+                border: 1px solid #d4af37;
+                box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+            }
+            .reveal-front {
+                background: radial-gradient(circle, #1a0b2e 0%, #000 100%);
+                transform: rotateY(180deg);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                border: 2px solid #d4af37;
+            }
 
-        .gold-gradient-text {
-            background: linear-gradient(to bottom, #fcf6ba 0%, #bf953f 40%, #b38728 60%, #aa771c 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-        }
+            /* Light Burst Effect */
+            .light-burst {
+                position: absolute;
+                top: 40%; /* Adjusted to match card spin finish height */
+                left: 50%;
+                width: 0;
+                height: 0;
+                background: radial-gradient(circle, rgba(212, 175, 55, 0.8) 0%, transparent 70%);
+                transform: translate(-50%, -50%);
+                pointer-events: none;
+                z-index: 40;
+                transition: width 0.4s ease-out, height 0.4s ease-out, opacity 0.4s ease-out;
+                opacity: 0;
+            }
+            .bursting .light-burst {
+                width: 800px;
+                height: 800px;
+                opacity: 0;
+            }
 
-        /* Creator Credit Glow & Pulse */
-        .text-glow-subtle {
-            color: #fcf6ba; /* lightgold */
-            text-shadow: 0 0 8px rgba(252, 246, 186, 0.4);
-        }
+            /* Scrollbar */
+            ::-webkit-scrollbar {
+                width: 3px;
+            }
+            ::-webkit-scrollbar-track {
+                background: transparent;
+            }
+            ::-webkit-scrollbar-thumb {
+                background: #4c2a85;
+                border-radius: 2px;
+            }
 
-        /* Magic Circle */
-        .rune-ring {
-            position: absolute;
-            border: 1px dashed rgba(212, 175, 55, 0.3);
-            border-radius: 50%;
-        }
+            /* Custom Buttons */
+            .btn-mystic {
+                position: relative;
+                overflow: hidden;
+                background: rgba(0, 0, 0, 0.6);
+                border: 1px solid rgba(123, 66, 246, 0.3);
+                transition: all 0.3s ease;
+            }
+            .btn-mystic:hover {
+                border-color: #d4af37;
+                background: rgba(45, 27, 78, 0.6);
+                box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+            }
+            .btn-mystic::after {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+                transition: 0.5s;
+            }
+            .btn-mystic:hover::after {
+                left: 100%;
+            }
+        </style>
+    </head>
+    <body class="antialiased selection:bg-purple-700 selection:text-white">
+        <!-- Global Background Elements -->
+        <div class="nebula-bg"></div>
+        <div id="stars-container" class="fixed inset-0 z-0 pointer-events-none opacity-60"></div>
 
-        /* Card 3D Styles */
-        .card-base {
-            width: 90px;
-            height: 154px;
-            background: #111;
-            border: 1px solid #333;
-            border-radius: 8px;
-            box-shadow: -4px 4px 12px rgba(0,0,0,0.8);
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            margin-left: -45px; 
-            transform-origin: 50% 150%; 
-            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease; /* Added box-shadow and border-color transition */
-            cursor: pointer;
-            z-index: 10;
-        }
+        <!-- Main App Wrapper: Phone Size -->
+        <div
+            id="app"
+            class="relative z-10 w-full h-[100dvh] overflow-hidden flex flex-col items-center justify-center md:w-[400px] md:h-[820px] md:rounded-[40px] md:border-[6px] md:border-[#1a1a1a] md:shadow-[0_0_60px_rgba(123,66,246,0.3)] transition-all duration-300"
+        >
+            <!-- Phone Notch -->
+            <div
+                class="hidden md:block absolute top-0 left-1/2 -translate-x-1/2 w-32 h-7 bg-[#111] rounded-b-xl z-50 shadow-lg"
+            ></div>
 
-        .card-pattern-bg {
-            width: 100%;
-            height: 100%;
-            border-radius: 7px;
-            background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20.5V18h2v2.5h-2zM20 18V0h-2v18h-8v2h8v18h2V20h8v-2h-8z' fill='%23583594' fill-opacity='0.15' fill-rule='evenodd'/%3E%3C/svg%3E");
-            background-color: #0d0616;
-            border: 1px solid rgba(212,175,55,0.25); /* More texture on border */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
-        }
-
-        /* Holographic Shimmer on Card Back */
-        .card-pattern-bg::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.08), transparent); /* Slightly stronger shimmer */
-            transform: rotate(45deg);
-            animation: shimmer 3s infinite linear;
-        }
-        @keyframes shimmer {
-            0% { transform: translateX(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) rotate(45deg); }
-        }
-
-        /* Hover effect in spread - ENHANCED FOR QUALITY INTERACTION */
-        .spread-active .card-base:hover {
-            transform: translateY(-40px) scale(1.15) !important;
-            z-index: 100;
-            border-color: #fcf6ba; /* Light Gold for high contrast */
-            box-shadow: 0 0 35px rgba(212, 175, 55, 0.9); /* Stronger glow */
-        }
-        
-        /* Specialized Animation Class for Spinning Card */
-        .card-spinning {
-            position: absolute !important;
-            bottom: 50% !important; /* Move to middle visually initially */
-            left: 50% !important;
-            margin-left: -45px !important;
-            transform-origin: center center !important;
-            animation: mystic-spin 1.8s cubic-bezier(0.45, 0, 0.55, 1) forwards !important;
-            z-index: 999 !important;
-            pointer-events: none;
-        }
-
-        /* Reveal Animation */
-        .tarot-card-reveal {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            transform-style: preserve-3d;
-            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .tarot-card-reveal.flipped {
-            transform: rotateY(180deg);
-        }
-        .reveal-face {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1px solid #d4af37;
-            box-shadow: 0 0 30px rgba(0,0,0,0.8);
-        }
-        .reveal-front {
-            background: radial-gradient(circle, #1a0b2e 0%, #000 100%);
-            transform: rotateY(180deg);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            border: 2px solid #d4af37;
-        }
-
-        /* Light Burst Effect */
-        .light-burst {
-            position: absolute;
-            top: 40%; /* Adjusted to match card spin finish height */
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: radial-gradient(circle, rgba(212,175,55,0.8) 0%, transparent 70%);
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            z-index: 40;
-            transition: width 0.4s ease-out, height 0.4s ease-out, opacity 0.4s ease-out;
-            opacity: 0;
-        }
-        .bursting .light-burst {
-            width: 800px;
-            height: 800px;
-            opacity: 0;
-        }
-
-        /* Scrollbar */
-        ::-webkit-scrollbar { width: 3px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #4c2a85; border-radius: 2px; }
-
-        /* Custom Buttons */
-        .btn-mystic {
-            position: relative;
-            overflow: hidden;
-            background: rgba(0,0,0,0.6);
-            border: 1px solid rgba(123, 66, 246, 0.3);
-            transition: all 0.3s ease;
-        }
-        .btn-mystic:hover {
-            border-color: #d4af37;
-            background: rgba(45, 27, 78, 0.6);
-            box-shadow: 0 0 15px rgba(212,175,55,0.2);
-        }
-        .btn-mystic::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            transition: 0.5s;
-        }
-        .btn-mystic:hover::after {
-            left: 100%;
-        }
-
-    </style>
-</head>
-<body class="antialiased selection:bg-purple-700 selection:text-white">
-
-    <!-- Global Background Elements -->
-    <div class="nebula-bg"></div>
-    <div id="stars-container" class="fixed inset-0 z-0 pointer-events-none opacity-60"></div>
-
-    <!-- Main App Wrapper: Phone Size -->
-    <div id="app" class="relative z-10 w-full h-[100dvh] overflow-hidden flex flex-col items-center justify-center 
-                         md:w-[400px] md:h-[820px] md:rounded-[40px] md:border-[6px] md:border-[#1a1a1a] md:shadow-[0_0_60px_rgba(123,66,246,0.3)]
-                         transition-all duration-300">
-
-        <!-- Phone Notch -->
-        <div class="hidden md:block absolute top-0 left-1/2 -translate-x-1/2 w-32 h-7 bg-[#111] rounded-b-xl z-50 shadow-lg"></div>
-
-        <!-- Inner Content Area -->
-        <div class="w-full h-full relative flex flex-col items-center justify-center">
-
-            <!-- SCREEN 1: Login & Verification -->
-            <section id="screen-login" class="absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center p-6 animate-fade-in z-20">
-                <div class="relative mb-8">
-                    <div class="absolute inset-0 bg-purple-600 blur-[40px] opacity-30 rounded-full animate-pulse-slow"></div>
-                    <i class="fa-solid fa-moon text-7xl text-purple-200 relative z-10 drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]"></i>
-                </div>
-                
-                <h1 class="text-5xl font-display font-bold gold-gradient-text tracking-[0.15em] mb-2 drop-shadow-2xl scale-y-90">LUMINA</h1>
-                <div class="w-16 h-[1px] bg-gradient-to-r from-transparent via-gold to-transparent mb-2"></div>
-                <p class="text-purple-300 text-[10px] tracking-[0.4em] uppercase opacity-80">The Infinite Oracle</p>
-                
-                <!-- Magic Scanner -->
-                <div class="mt-16 relative group cursor-pointer" onclick="startVerification()">
-                    <!-- Rotating Runes -->
-                    <div class="rune-ring w-32 h-32 animate-spin-slow opacity-30 group-hover:opacity-60 transition-opacity"></div>
-                    <div class="rune-ring w-28 h-28 animate-spin-reverse opacity-30 group-hover:opacity-60 transition-opacity border-dotted"></div>
-                    
-                    <div class="w-24 h-24 rounded-full border border-purple-500/30 flex items-center justify-center relative overflow-hidden glass-panel transition-all duration-500 active:scale-95 group-hover:shadow-[0_0_30px_rgba(123,66,246,0.4)]">
-                        <i class="fa-solid fa-fingerprint text-4xl text-purple-300 opacity-60 group-hover:opacity-100 transition-opacity"></i>
-                        <!-- Scan beam -->
-                        <div id="scanner" class="absolute inset-0 bg-gradient-to-b from-transparent via-purple-400/30 to-transparent hidden">
-                            <div class="scanner-line"></div>
-                        </div>
-                    </div>
-                </div>
-                <p id="verify-text" class="mt-8 text-[10px] tracking-[0.2em] text-purple-400 uppercase transition-all">Touch to Verify Soul ID</p>
-            </section>
-
-            <!-- SCREEN 2: Language Selection -->
-            <section id="screen-language" class="absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center hidden z-20 p-5 bg-black/40 backdrop-blur-sm">
-                <div class="w-full max-w-sm animate-zoom-in flex flex-col items-center">
-                    <h2 class="text-2xl font-display text-white mb-2 tracking-wide">Select Resonance</h2>
-                    <div class="w-12 h-[1px] bg-purple-500/50 mb-8"></div>
-                    
-                    <div class="grid grid-cols-2 gap-3 w-full">
-                        <!-- JS Injected -->
-                    </div>
-                </div>
-            </section>
-
-            <!-- SCREEN 3: Category Selection -->
-            <section id="screen-category" class="absolute inset-0 w-full h-full flex flex-col items-center pt-24 pb-8 hidden z-20 bg-black/40 backdrop-blur-sm">
-                <h2 id="cat-title" class="text-2xl font-display text-white mb-2">What do you seek?</h2>
-                <div class="w-full px-8 mb-6"><div class="h-[1px] bg-gradient-to-r from-transparent via-purple-500/40 to-transparent"></div></div>
-                
-                <div class="grid grid-cols-2 gap-3 overflow-y-auto px-5 w-full custom-scroll pb-10 content-start">
-                    <!-- JS Injected -->
-                </div>
-            </section>
-
-            <!-- SCREEN 4: The Ritual (Spread & Draw) -->
-            <section id="screen-table" class="absolute inset-0 w-full h-full flex flex-col items-center justify-between py-10 hidden z-10 overflow-hidden">
-                
-                <!-- Instructions -->
-                <div class="z-30 text-center transition-opacity duration-500 mt-16" id="table-header">
-                    <h3 id="table-instruction" class="text-xl font-display gold-gradient-text tracking-widest drop-shadow-lg">Begin Ritual</h3>
-                    <p id="table-sub" class="text-[10px] text-purple-300 mt-2 tracking-[0.2em] uppercase opacity-80">Tap to spread</p>
-                </div>
-
-                <!-- The Spread Area -->
-                <div class="flex-grow w-full relative flex items-center justify-center perspective-1000 overflow-visible" id="spread-area">
-                    
-                    <!-- Light Burst Container -->
-                    <div id="burst-container" class="absolute inset-0 flex items-center justify-center pointer-events-none">
-                        <div class="light-burst rounded-full blur-xl"></div>
+            <!-- Inner Content Area -->
+            <div class="w-full h-full relative flex flex-col items-center justify-center">
+                <!-- SCREEN 1: Login & Verification -->
+                <section
+                    id="screen-login"
+                    class="absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center p-6 animate-fade-in z-20"
+                >
+                    <div class="relative mb-8">
+                        <div
+                            class="absolute inset-0 bg-purple-600 blur-[40px] opacity-30 rounded-full animate-pulse-slow"
+                        ></div>
+                        <i
+                            class="fa-solid fa-moon text-7xl text-purple-200 relative z-10 drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]"
+                        ></i>
                     </div>
 
-                    <!-- Initial Deck (Stacked) -->
-                    <div id="deck-stack" class="relative cursor-pointer group" onclick="spreadCards()">
-                        <div class="absolute w-[90px] h-[154px] bg-[#1a0b2e] rounded-lg border border-purple-800 transform translate-x-1 translate-y-1"></div>
-                        <div class="absolute w-[90px] h-[154px] bg-[#1a0b2e] rounded-lg border border-purple-800 transform -translate-x-1 -translate-y-1"></div>
-                        <div class="relative w-[90px] h-[154px] bg-[#0d0616] rounded-lg border border-purple-500/50 shadow-[0_0_30px_rgba(76,42,133,0.4)] flex items-center justify-center group-hover:shadow-[0_0_50px_rgba(212,175,55,0.4)] transition-shadow duration-500">
-                            <div class="card-pattern-bg">
-                                <i class="fa-solid fa-sun text-3xl text-purple-400/20"></i>
+                    <h1
+                        class="text-5xl font-display font-bold gold-gradient-text tracking-[0.15em] mb-2 drop-shadow-2xl scale-y-90"
+                    >
+                        LUMINA
+                    </h1>
+                    <div class="w-16 h-[1px] bg-gradient-to-r from-transparent via-gold to-transparent mb-2"></div>
+                    <p class="text-purple-300 text-[10px] tracking-[0.4em] uppercase opacity-80">The Infinite Oracle</p>
+
+                    <!-- Magic Scanner -->
+                    <div class="mt-16 relative group cursor-pointer" onclick="startVerification()">
+                        <!-- Rotating Runes -->
+                        <div
+                            class="rune-ring w-32 h-32 animate-spin-slow opacity-30 group-hover:opacity-60 transition-opacity"
+                        ></div>
+                        <div
+                            class="rune-ring w-28 h-28 animate-spin-reverse opacity-30 group-hover:opacity-60 transition-opacity border-dotted"
+                        ></div>
+
+                        <div
+                            class="w-24 h-24 rounded-full border border-purple-500/30 flex items-center justify-center relative overflow-hidden glass-panel transition-all duration-500 active:scale-95 group-hover:shadow-[0_0_30px_rgba(123,66,246,0.4)]"
+                        >
+                            <i
+                                class="fa-solid fa-fingerprint text-4xl text-purple-300 opacity-60 group-hover:opacity-100 transition-opacity"
+                            ></i>
+                            <!-- Scan beam -->
+                            <div
+                                id="scanner"
+                                class="absolute inset-0 bg-gradient-to-b from-transparent via-purple-400/30 to-transparent hidden"
+                            >
+                                <div class="scanner-line"></div>
                             </div>
                         </div>
                     </div>
+                    <p
+                        id="verify-text"
+                        class="mt-8 text-[10px] tracking-[0.2em] text-purple-400 uppercase transition-all"
+                    >
+                        Touch to Verify Soul ID
+                    </p>
+                </section>
 
-                    <!-- Container for Fanned Cards -->
-                    <div id="fan-container" class="absolute bottom-20 w-full h-[320px] flex justify-center items-end pointer-events-none opacity-0 transition-opacity duration-1000">
-                        <!-- JS Injected -->
+                <!-- SCREEN 2: Language Selection -->
+                <section
+                    id="screen-language"
+                    class="absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center hidden z-20 p-5 bg-black/40 backdrop-blur-sm"
+                >
+                    <div class="w-full max-w-sm animate-zoom-in flex flex-col items-center">
+                        <h2 class="text-2xl font-display text-white mb-2 tracking-wide">Select Resonance</h2>
+                        <div class="w-12 h-[1px] bg-purple-500/50 mb-8"></div>
+
+                        <div class="grid grid-cols-2 gap-3 w-full">
+                            <!-- JS Injected -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SCREEN 3: Category Selection -->
+                <section
+                    id="screen-category"
+                    class="absolute inset-0 w-full h-full flex flex-col items-center pt-24 pb-8 hidden z-20 bg-black/40 backdrop-blur-sm"
+                >
+                    <h2 id="cat-title" class="text-2xl font-display text-white mb-2">What do you seek?</h2>
+                    <div class="w-full px-8 mb-6">
+                        <div class="h-[1px] bg-gradient-to-r from-transparent via-purple-500/40 to-transparent"></div>
                     </div>
 
-                    <!-- Drawn Card Reveal Stage -->
-                    <div id="reveal-stage" class="absolute inset-0 flex items-center justify-center pointer-events-none hidden z-50">
-                        <!-- Position adjusted to match end of mystic-spin animation -->
-                        <div class="absolute top-[40%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[220px] h-[374px]">
-                            <div id="final-card" class="w-full h-full tarot-card-reveal opacity-0 scale-50 transition-all duration-700">
-                                <div class="reveal-face reveal-back">
-                                     <div class="card-pattern-bg">
-                                        <i class="fa-solid fa-star-of-david text-6xl text-purple-500/20"></i>
-                                    </div>
+                    <div class="grid grid-cols-2 gap-3 overflow-y-auto px-5 w-full custom-scroll pb-10 content-start">
+                        <!-- JS Injected -->
+                    </div>
+                </section>
+
+                <!-- SCREEN 4: The Ritual (Spread & Draw) -->
+                <section
+                    id="screen-table"
+                    class="absolute inset-0 w-full h-full flex flex-col items-center justify-between py-10 hidden z-10 overflow-hidden"
+                >
+                    <!-- Instructions -->
+                    <div class="z-30 text-center transition-opacity duration-500 mt-16" id="table-header">
+                        <h3
+                            id="table-instruction"
+                            class="text-xl font-display gold-gradient-text tracking-widest drop-shadow-lg"
+                        >
+                            Begin Ritual
+                        </h3>
+                        <p
+                            id="table-sub"
+                            class="text-[10px] text-purple-300 mt-2 tracking-[0.2em] uppercase opacity-80"
+                        >
+                            Tap to spread
+                        </p>
+                    </div>
+
+                    <!-- The Spread Area -->
+                    <div
+                        class="flex-grow w-full relative flex items-center justify-center perspective-1000 overflow-visible"
+                        id="spread-area"
+                    >
+                        <!-- Light Burst Container -->
+                        <div
+                            id="burst-container"
+                            class="absolute inset-0 flex items-center justify-center pointer-events-none"
+                        >
+                            <div class="light-burst rounded-full blur-xl"></div>
+                        </div>
+
+                        <!-- Initial Deck (Stacked) -->
+                        <div id="deck-stack" class="relative cursor-pointer group" onclick="spreadCards()">
+                            <div
+                                class="absolute w-[90px] h-[154px] bg-[#1a0b2e] rounded-lg border border-purple-800 transform translate-x-1 translate-y-1"
+                            ></div>
+                            <div
+                                class="absolute w-[90px] h-[154px] bg-[#1a0b2e] rounded-lg border border-purple-800 transform -translate-x-1 -translate-y-1"
+                            ></div>
+                            <div
+                                class="relative w-[90px] h-[154px] bg-[#0d0616] rounded-lg border border-purple-500/50 shadow-[0_0_30px_rgba(76,42,133,0.4)] flex items-center justify-center group-hover:shadow-[0_0_50px_rgba(212,175,55,0.4)] transition-shadow duration-500"
+                            >
+                                <div class="card-pattern-bg">
+                                    <i class="fa-solid fa-sun text-3xl text-purple-400/20"></i>
                                 </div>
-                                <div class="reveal-face reveal-front glass-panel">
-                                    <div class="w-[92%] h-[95%] border border-gold/30 flex flex-col items-center justify-between p-4 bg-black/60 backdrop-blur-md rounded-lg mt-[2.5%]">
-                                        <div class="text-[9px] tracking-[0.3em] text-purple-400 uppercase mt-1">Arcana Major</div>
-                                        <div class="flex flex-col items-center">
-                                            <div class="relative">
-                                                <div class="absolute inset-0 bg-gold blur-2xl opacity-20"></div>
-                                                <i id="reveal-icon" class="fa-solid fa-sun text-6xl gold-gradient-text mb-6 drop-shadow-[0_0_10px_rgba(212,175,55,0.8)] relative z-10"></i>
-                                            </div>
-                                            <h4 id="reveal-name" class="text-xl font-display gold-gradient-text text-center border-b border-purple-500/30 pb-3 mb-1 w-full">The Sun</h4>
-                                            <p id="reveal-pos" class="text-[10px] text-gray-400 uppercase tracking-widest mt-1">Upright</p>
+                            </div>
+                        </div>
+
+                        <!-- Container for Fanned Cards -->
+                        <div
+                            id="fan-container"
+                            class="absolute bottom-20 w-full h-[320px] flex justify-center items-end pointer-events-none opacity-0 transition-opacity duration-1000"
+                        >
+                            <!-- JS Injected -->
+                        </div>
+
+                        <!-- Drawn Card Reveal Stage -->
+                        <div
+                            id="reveal-stage"
+                            class="absolute inset-0 flex items-center justify-center pointer-events-none hidden z-50"
+                        >
+                            <!-- Position adjusted to match end of mystic-spin animation -->
+                            <div
+                                class="absolute top-[40%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[220px] h-[374px]"
+                            >
+                                <div
+                                    id="final-card"
+                                    class="w-full h-full tarot-card-reveal opacity-0 scale-50 transition-all duration-700"
+                                >
+                                    <div class="reveal-face reveal-back">
+                                        <div class="card-pattern-bg">
+                                            <i class="fa-solid fa-star-of-david text-6xl text-purple-500/20"></i>
                                         </div>
-                                        <div class="text-xl text-purple-800">✦</div>
+                                    </div>
+                                    <div class="reveal-face reveal-front glass-panel">
+                                        <div
+                                            class="w-[92%] h-[95%] border border-gold/30 flex flex-col items-center justify-between p-4 bg-black/60 backdrop-blur-md rounded-lg mt-[2.5%]"
+                                        >
+                                            <div class="text-[9px] tracking-[0.3em] text-purple-400 uppercase mt-1">
+                                                Arcana Major
+                                            </div>
+                                            <div class="flex flex-col items-center">
+                                                <div class="relative">
+                                                    <div class="absolute inset-0 bg-gold blur-2xl opacity-20"></div>
+                                                    <i
+                                                        id="reveal-icon"
+                                                        class="fa-solid fa-sun text-6xl gold-gradient-text mb-6 drop-shadow-[0_0_10px_rgba(212,175,55,0.8)] relative z-10"
+                                                    ></i>
+                                                </div>
+                                                <h4
+                                                    id="reveal-name"
+                                                    class="text-xl font-display gold-gradient-text text-center border-b border-purple-500/30 pb-3 mb-1 w-full"
+                                                >
+                                                    The Sun
+                                                </h4>
+                                                <p
+                                                    id="reveal-pos"
+                                                    class="text-[10px] text-gray-400 uppercase tracking-widest mt-1"
+                                                >
+                                                    Upright
+                                                </p>
+                                            </div>
+                                            <div class="text-xl text-purple-800">✦</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                </div>
+                    <!-- Footer Controls -->
+                    <div class="z-30 pb-6">
+                        <button
+                            onclick="resetApp()"
+                            class="text-[10px] text-purple-400/50 hover:text-gold transition-colors uppercase tracking-[0.2em] flex items-center gap-2"
+                        >
+                            <i class="fa-solid fa-arrow-rotate-left"></i> <span id="btn-reset-label">Abort</span>
+                        </button>
+                    </div>
+                </section>
 
-                <!-- Footer Controls -->
-                <div class="z-30 pb-6">
-                    <button onclick="resetApp()" class="text-[10px] text-purple-400/50 hover:text-gold transition-colors uppercase tracking-[0.2em] flex items-center gap-2">
-                        <i class="fa-solid fa-arrow-rotate-left"></i> <span id="btn-reset-label">Abort</span>
-                    </button>
-                </div>
-            </section>
-
-            <!-- SCREEN 5: Result Interpretation -->
-            <section id="screen-result" class="absolute inset-0 w-full h-full flex flex-col items-center hidden z-30 bg-[#05020a]/95 backdrop-blur-xl">
-                <!-- Result Content -->
-                <div class="w-full h-full overflow-y-auto custom-scroll p-6 animate-fade-in flex flex-col">
-                    
-                    <!-- Header -->
-                    <div class="w-full flex justify-between items-end mb-6 border-b border-purple-500/20 pb-4 pt-8 sticky top-0 bg-[#05020a]/90 backdrop-blur-md z-10">
-                        <div>
-                            <span class="text-[9px] font-bold text-purple-400 tracking-[0.2em] uppercase block mb-1" id="res-cat-label">LOVE</span>
-                            <h2 class="text-2xl font-display gold-gradient-text leading-tight drop-shadow-lg" id="res-card-title">The Sun</h2>
+                <!-- SCREEN 5: Result Interpretation -->
+                <section
+                    id="screen-result"
+                    class="absolute inset-0 w-full h-full flex flex-col items-center hidden z-30 bg-[#05020a]/95 backdrop-blur-xl"
+                >
+                    <!-- Result Content -->
+                    <div class="w-full h-full overflow-y-auto custom-scroll p-6 animate-fade-in flex flex-col">
+                        <!-- Header -->
+                        <div
+                            class="w-full flex justify-between items-end mb-6 border-b border-purple-500/20 pb-4 pt-8 sticky top-0 bg-[#05020a]/90 backdrop-blur-md z-10"
+                        >
+                            <div>
+                                <span
+                                    class="text-[9px] font-bold text-purple-400 tracking-[0.2em] uppercase block mb-1"
+                                    id="res-cat-label"
+                                    >LOVE</span
+                                >
+                                <h2
+                                    class="text-2xl font-display gold-gradient-text leading-tight drop-shadow-lg"
+                                    id="res-card-title"
+                                >
+                                    The Sun
+                                </h2>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-[9px] text-gray-500 font-mono block" id="res-date">2023.10.27</span>
+                                <span class="text-[9px] text-gold/70 uppercase tracking-widest" id="res-pos"
+                                    >Upright</span
+                                >
+                            </div>
                         </div>
-                        <div class="text-right">
-                            <span class="text-[9px] text-gray-500 font-mono block" id="res-date">2023.10.27</span>
-                            <span class="text-[9px] text-gold/70 uppercase tracking-widest" id="res-pos">Upright</span>
+
+                        <!-- Keywords -->
+                        <div class="flex flex-wrap gap-2 mb-6" id="res-keywords">
+                            <!-- Injected -->
+                        </div>
+
+                        <div class="flex flex-col gap-6 pb-20">
+                            <!-- Main Oracle Message -->
+                            <div class="space-y-2">
+                                <h3
+                                    class="text-xs font-bold text-purple-200 uppercase tracking-wider flex items-center gap-2"
+                                >
+                                    <i class="fa-solid fa-eye text-gold/70"></i>
+                                    <span id="label-oracle">Oracle Message</span>
+                                </h3>
+                                <p
+                                    id="res-text-main"
+                                    class="text-gray-300 leading-relaxed font-light text-sm text-justify"
+                                >
+                                    <!-- Content -->
+                                </p>
+                            </div>
+
+                            <!-- Specific Guidance (The "Answer") -->
+                            <div
+                                class="p-5 bg-purple-900/10 rounded-xl border border-purple-500/20 relative overflow-hidden"
+                            >
+                                <div
+                                    class="absolute top-0 right-0 w-16 h-16 bg-purple-500/10 blur-xl rounded-full"
+                                ></div>
+                                <h3
+                                    id="res-guidance-label"
+                                    class="text-xs font-bold text-gold uppercase tracking-widest mb-3 relative z-10"
+                                >
+                                    Guidance
+                                </h3>
+                                <p
+                                    id="res-text-guidance"
+                                    class="text-gray-200 font-serif italic text-sm relative z-10 leading-relaxed"
+                                >
+                                    <!-- Guidance -->
+                                </p>
+                            </div>
+
+                            <!-- Consult Again Button -->
+                            <div class="text-center pt-6">
+                                <button onclick="resetApp()" class="w-full btn-mystic rounded-lg py-4 group">
+                                    <span
+                                        class="tracking-[0.2em] uppercase text-xs font-bold text-white group-hover:text-gold transition-colors"
+                                        id="btn-again"
+                                        >Consult Again</span
+                                    >
+                                </button>
+                            </div>
+
+                            <!-- CREATOR CREDIT (Updated with glow and pulse) -->
+                            <div
+                                class="mt-8 mb-4 text-[9px] text-center font-display tracking-[0.3em] uppercase text-glow-subtle animate-pulse-slow"
+                                id="creator-credit"
+                            >
+                                <!-- Injected by JS -->
+                            </div>
                         </div>
                     </div>
-
-                    <!-- Keywords -->
-                    <div class="flex flex-wrap gap-2 mb-6" id="res-keywords">
-                        <!-- Injected -->
-                    </div>
-
-                    <div class="flex flex-col gap-6 pb-20">
-                        
-                        <!-- Main Oracle Message -->
-                        <div class="space-y-2">
-                            <h3 class="text-xs font-bold text-purple-200 uppercase tracking-wider flex items-center gap-2">
-                                <i class="fa-solid fa-eye text-gold/70"></i> <span id="label-oracle">Oracle Message</span>
-                            </h3>
-                            <p id="res-text-main" class="text-gray-300 leading-relaxed font-light text-sm text-justify">
-                                <!-- Content -->
-                            </p>
-                        </div>
-
-                        <!-- Specific Guidance (The "Answer") -->
-                        <div class="p-5 bg-purple-900/10 rounded-xl border border-purple-500/20 relative overflow-hidden">
-                            <div class="absolute top-0 right-0 w-16 h-16 bg-purple-500/10 blur-xl rounded-full"></div>
-                            <h3 id="res-guidance-label" class="text-xs font-bold text-gold uppercase tracking-widest mb-3 relative z-10">
-                                Guidance
-                            </h3>
-                            <p id="res-text-guidance" class="text-gray-200 font-serif italic text-sm relative z-10 leading-relaxed">
-                                <!-- Guidance -->
-                            </p>
-                        </div>
-
-                        <!-- Consult Again Button -->
-                        <div class="text-center pt-6">
-                            <button onclick="resetApp()" class="w-full btn-mystic rounded-lg py-4 group">
-                                <span class="tracking-[0.2em] uppercase text-xs font-bold text-white group-hover:text-gold transition-colors" id="btn-again">Consult Again</span>
-                            </button>
-                        </div>
-
-                        <!-- CREATOR CREDIT (Updated with glow and pulse) -->
-                        <div class="mt-8 mb-4 text-[9px] text-center font-display tracking-[0.3em] uppercase text-glow-subtle animate-pulse-slow" id="creator-credit">
-                            <!-- Injected by JS -->
-                        </div>
-                    </div>
-                </div>
-            </section>
-
+                </section>
+            </div>
         </div>
-    </div>
 
-    <script>
-        /* --- Data: Rich Translations (Chinese content retained for display) --- */
-        const i18n = {
-            en: {
-                verify: "Verifying Soul Signature...",
-                verified: "Connection Established",
-                selectCat: "Choose Your Path",
-                instruction_deck: "Tap deck to shuffle",
-                instruction_spread: "Sense the energy... Draw",
-                pos_up: "Upright",
-                pos_rev: "Reversed",
-                labels: { oracle: "The Meaning", guidance: "Your Guidance", keywords: "Keywords" },
-                btn_reset: "Restart",
-                btn_again: "Consult Again",
-                creator: "Oracle Creator: Luoluo",
-                cats: {
-                    career: { label: "Career & Ambition", icon: "fa-briefcase" },
-                    love: { label: "Love & Relations", icon: "fa-heart" },
-                    life: { label: "Life Path", icon: "fa-compass" },
-                    wealth: { label: "Wealth & Fortune", icon: "fa-coins" },
-                    health: { label: "Vitality", icon: "fa-staff-snake" },
-                    spirit: { label: "Spiritual Growth", icon: "fa-om" }
-                }
-            },
-            zh: {
-                verify: "正在链接灵性场域...",
-                verified: "灵魂印记已确认",
-                selectCat: "请选择占卜领域",
-                instruction_deck: "点击牌堆进行洗牌",
-                instruction_spread: "凝神静气 感知你的牌",
-                pos_up: "正位",
-                pos_rev: "逆位",
-                labels: { oracle: "牌面神谕", guidance: "当下指引", keywords: "核心关键词" },
-                btn_reset: "重置",
-                btn_again: "再次占卜",
-                creator: "神谕创造者：落落",
-                cats: {
-                    career: { label: "事业与前途", icon: "fa-briefcase" },
-                    love: { label: "爱情与缘分", icon: "fa-heart" },
-                    life: { label: "命运与生活", icon: "fa-compass" },
-                    wealth: { label: "财运与机遇", icon: "fa-coins" },
-                    health: { label: "身心健康", icon: "fa-staff-snake" },
-                    spirit: { label: "灵性觉醒", icon: "fa-om" }
-                }
-            },
-            kr: {
-                verify: "영혼의 파동 연결 중...",
-                verified: "접속 확인",
-                selectCat: "운명의 영역 선택",
-                instruction_deck: "카드를 탭하여 셔플",
-                instruction_spread: "마음을 비우고 선택하세요",
-                pos_up: "정방향",
-                pos_rev: "역방향",
-                labels: { oracle: "카드의 의미", guidance: "조언", keywords: "키워드" },
-                btn_reset: "초기화",
-                btn_again: "다시 점치기",
-                creator: "오라클 크리에이터: Luoluo",
-                cats: {
-                    career: { label: "직업/성공", icon: "fa-briefcase" },
-                    love: { label: "사랑/인연", icon: "fa-heart" },
-                    life: { label: "인생/운명", icon: "fa-compass" },
-                    wealth: { label: "금전/재물", icon: "fa-coins" },
-                    health: { label: "건강/활력", icon: "fa-staff-snake" },
-                    spirit: { label: "영성/내면", icon: "fa-om" }
-                }
-            },
-            jp: { verify: "スキャン中...", verified: "確認完了", selectCat: "テーマ選択", instruction_deck: "シャッフル", instruction_spread: "カードを引く", pos_up: "正位置", pos_rev: "逆位置", labels: {oracle:"意味", guidance:"助言", keywords:"キーワード"}, btn_reset:"リセット", btn_again:"もう一度", creator: "Oracle Creator: Luoluo", cats: {career:{label:"仕事",icon:"fa-briefcase"},love:{label:"恋愛",icon:"fa-heart"},life:{label:"人生",icon:"fa-compass"},wealth:{label:"金運",icon:"fa-coins"},health:{label:"健康",icon:"fa-staff-snake"},spirit:{label:"精神",icon:"fa-om"}} },
-            fr: { verify: "Vérification...", verified: "Confirmé", selectCat: "Domaine", instruction_deck: "Mélanger", instruction_spread: "Tirez une carte", pos_up: "Endroit", pos_rev: "Envers", labels: {oracle:"Sens", guidance:"Conseil", keywords:"Mots-clés"}, btn_reset:"Retour", btn_again:"Nouvelle lecture", creator: "Créateur Oracle: Luoluo", cats: {career:{label:"Carrière",icon:"fa-briefcase"},love:{label:"Amour",icon:"fa-heart"},life:{label:"Vie",icon:"fa-compass"},wealth:{label:"Fortune",icon:"fa-coins"},health:{label:"Santé",icon:"fa-staff-snake"},spirit:{label:"Esprit",icon:"fa-om"}} },
-            es: { verify: "Verificando...", verified: "Confirmado", selectCat: "Tema", instruction_deck: "Barajar", instruction_spread: "Elige una carta", pos_up: "Al Derecho", pos_rev: "Invertida", labels: {oracle:"Significado", guidance:"Consejo", keywords:"Claves"}, btn_reset:"Volver", btn_again:"Nueva Lectura", creator: "Creador del Oráculo: Luoluo", cats: {career:{label:"Carrera",icon:"fa-briefcase"},love:{label:"Amor",icon:"fa-heart"},life:{label:"Vida",icon:"fa-compass"},wealth:{label:"Riqueza",icon:"fa-coins"},health:{label:"Salud",icon:"fa-staff-snake"},spirit:{label:"Espíritu",icon:"fa-om"}} }
-        };
+        <script>
+            /* --- Data: Rich Translations (Chinese content retained for display) --- */
+            const i18n = {
+                en: {
+                    verify: "Verifying Soul Signature...",
+                    verified: "Connection Established",
+                    selectCat: "Choose Your Path",
+                    instruction_deck: "Tap deck to shuffle",
+                    instruction_spread: "Sense the energy... Draw",
+                    pos_up: "Upright",
+                    pos_rev: "Reversed",
+                    labels: { oracle: "The Meaning", guidance: "Your Guidance", keywords: "Keywords" },
+                    btn_reset: "Restart",
+                    btn_again: "Consult Again",
+                    creator: "Oracle Creator: Luoluo",
+                    cooldown: "Recharging",
+                    cats: {
+                        career: { label: "Career & Ambition", icon: "fa-briefcase" },
+                        love: { label: "Love & Relations", icon: "fa-heart" },
+                        life: { label: "Life Path", icon: "fa-compass" },
+                        wealth: { label: "Wealth & Fortune", icon: "fa-coins" },
+                        health: { label: "Vitality", icon: "fa-staff-snake" },
+                        spirit: { label: "Spiritual Growth", icon: "fa-om" },
+                    },
+                },
+                zh: {
+                    verify: "正在链接灵性场域...",
+                    verified: "灵魂印记已确认",
+                    selectCat: "请选择占卜领域",
+                    instruction_deck: "点击牌堆进行洗牌",
+                    instruction_spread: "凝神静气 感知你的牌",
+                    pos_up: "正位",
+                    pos_rev: "逆位",
+                    labels: { oracle: "牌面神谕", guidance: "当下指引", keywords: "核心关键词" },
+                    btn_reset: "重置",
+                    btn_again: "再次占卜",
+                    creator: "神谕创造者：落落",
+                    cooldown: "神谕倒计时", // Updated here
+                    cats: {
+                        career: { label: "事业与前途", icon: "fa-briefcase" },
+                        love: { label: "爱情与缘分", icon: "fa-heart" },
+                        life: { label: "命运与生活", icon: "fa-compass" },
+                        wealth: { label: "财运与机遇", icon: "fa-coins" },
+                        health: { label: "身心健康", icon: "fa-staff-snake" },
+                        spirit: { label: "灵性觉醒", icon: "fa-om" },
+                    },
+                },
+                kr: {
+                    verify: "영혼의 파동 연결 중...",
+                    verified: "접속 확인",
+                    selectCat: "운명의 영역 선택",
+                    instruction_deck: "카드를 탭하여 셔플",
+                    instruction_spread: "마음을 비우고 선택하세요",
+                    pos_up: "정방향",
+                    pos_rev: "역방향",
+                    labels: { oracle: "카드의 의미", guidance: "조언", keywords: "키워드" },
+                    btn_reset: "초기화",
+                    btn_again: "다시 점치기",
+                    creator: "오라클 크리에이터: Luoluo",
+                    cooldown: "충전 중",
+                    cats: {
+                        career: { label: "직업/성공", icon: "fa-briefcase" },
+                        love: { label: "사랑/인연", icon: "fa-heart" },
+                        life: { label: "인생/운명", icon: "fa-compass" },
+                        wealth: { label: "금전/재물", icon: "fa-coins" },
+                        health: { label: "건강/활력", icon: "fa-staff-snake" },
+                        spirit: { label: "영성/내면", icon: "fa-om" },
+                    },
+                },
+                jp: {
+                    verify: "スキャン中...",
+                    verified: "確認完了",
+                    selectCat: "テーマ選択",
+                    instruction_deck: "シャッフル",
+                    instruction_spread: "カードを引く",
+                    pos_up: "正位置",
+                    pos_rev: "逆位置",
+                    labels: { oracle: "意味", guidance: "助言", keywords: "キーワード" },
+                    btn_reset: "リセット",
+                    btn_again: "もう一度",
+                    creator: "Oracle Creator: Luoluo",
+                    cooldown: "チャージ中",
+                    cats: {
+                        career: { label: "仕事", icon: "fa-briefcase" },
+                        love: { label: "恋愛", icon: "fa-heart" },
+                        life: { label: "人生", icon: "fa-compass" },
+                        wealth: { label: "金運", icon: "fa-coins" },
+                        health: { label: "健康", icon: "fa-staff-snake" },
+                        spirit: { label: "精神", icon: "fa-om" },
+                    },
+                },
+                fr: {
+                    verify: "Vérification...",
+                    verified: "Confirmé",
+                    selectCat: "Domaine",
+                    instruction_deck: "Mélanger",
+                    instruction_spread: "Tirez une carte",
+                    pos_up: "Endroit",
+                    pos_rev: "Envers",
+                    labels: { oracle: "Sens", guidance: "Conseil", keywords: "Mots-clés" },
+                    btn_reset: "Retour",
+                    btn_again: "Nouvelle lecture",
+                    creator: "Créateur Oracle: Luoluo",
+                    cooldown: "Recharge",
+                    cats: {
+                        career: { label: "Carrière", icon: "fa-briefcase" },
+                        love: { label: "Amour", icon: "fa-heart" },
+                        life: { label: "Vie", icon: "fa-compass" },
+                        wealth: { label: "Fortune", icon: "fa-coins" },
+                        health: { label: "Santé", icon: "fa-staff-snake" },
+                        spirit: { label: "Esprit", icon: "fa-om" },
+                    },
+                },
+                es: {
+                    verify: "Verificando...",
+                    verified: "Confirmado",
+                    selectCat: "Tema",
+                    instruction_deck: "Barajar",
+                    instruction_spread: "Elige una carta",
+                    pos_up: "Al Derecho",
+                    pos_rev: "Invertida",
+                    labels: { oracle: "Significado", guidance: "Consejo", keywords: "Claves" },
+                    btn_reset: "Volver",
+                    btn_again: "Nueva Lectura",
+                    creator: "Creador del Oráculo: Luoluo",
+                    cooldown: "Recargando",
+                    cats: {
+                        career: { label: "Carrera", icon: "fa-briefcase" },
+                        love: { label: "Amor", icon: "fa-heart" },
+                        life: { label: "Vida", icon: "fa-compass" },
+                        wealth: { label: "Riqueza", icon: "fa-coins" },
+                        health: { label: "Salud", icon: "fa-staff-snake" },
+                        spirit: { label: "Espíritu", icon: "fa-om" },
+                    },
+                },
+            };
 
-        /* --- Rich Data: Major Arcana --- */
-        const tarotData = [
-            { 
-                id: 0, name: "The Fool", name_zh: "愚人", icon: "fa-person-walking", 
-                keywords: ["New Beginnings", "Innocence", "Leap of Faith", "Unlimited Potential"],
-                keywords_zh: ["新的开始", "天真", "信念之跃", "无限潜力"],
-                meanings: {
-                    general: "The Fool represents the start of a journey. You are standing at a precipice, ready to jump into the unknown. It suggests a time of innocence, spontaneity, and potential.",
-                    general_zh: "愚人代表旅程的开始。你站在悬崖边，准备跳入未知。它象征着天真、自发性和纯粹的潜力。哪怕前路未卜，你的心中充满阳光。",
-                    love: "In love, be ready for a spontaneous and exciting new connection. Don't be afraid to take a risk and show your true self.",
-                    love_zh: "在感情中，准备好迎接一段自发且激动人心的新关系。不要害怕冒险，向对方展示真实的自己。现在的你魅力在于那份无拘无束。",
-                    career: "A new job opportunity or a fresh start in your current role. Trust your instincts and try something unconventional.",
-                    career_zh: "职业生涯的新起点，或者当前角色的全新尝试。相信你的直觉，尝试一些非常规的方法，初生牛犊不怕虎是你的优势。",
-                    wealth: "Financial opportunities may appear unexpectedly. Take a calculated risk.",
-                    wealth_zh: "财务机会可能会意外出现。可以尝试一些经过计算的小风险投资，保持开放心态。"
+            /* --- Rich Data: Major Arcana (Deeply Expanded for Chinese Context) --- */
+            const tarotData = [
+                {
+                    id: 0,
+                    name: "The Fool",
+                    name_zh: "愚人",
+                    icon: "fa-person-walking",
+                    keywords: ["New Beginnings", "Innocence", "Leap of Faith", "Unlimited Potential"],
+                    keywords_zh: ["无限潜能", "纯真直觉", "信念之跃", "全新旅程"],
+                    meanings: {
+                        general:
+                            "The Fool represents the start of a journey. You are standing at a precipice, ready to jump into the unknown.",
+                        general_zh:
+                            "愚人是塔罗牌组中的“0”号牌，象征着绝对的空无与无限的潜能。现在的你正站在悬崖边缘，准备踏入一个完全未知的领域。这并非鲁莽，而是一种灵魂深处对命运的信任。你背包里装着过往的经验，但此刻，你需要的是如孩童般纯粹的好奇心。逻辑分析在此时已不再重要，请听从你内心的直觉。虽然前路未卜，甚至可能充满挑战，但宇宙正在保护着每一个敢于追梦的灵魂。这是一段自我发现宏大旅程的开端，保持开放，拥抱每一个当下。",
+                        love: "In love, be ready for a spontaneous and exciting new connection. Don't be afraid to take a risk.",
+                        love_zh:
+                            "在情感层面，愚人预示着一段充满惊喜与自发性的关系。如果你是单身，可能会意外邂逅一个让你感到无比自由的人，这段关系不按常理出牌，却充满激情。如果你已有伴侣，这张牌鼓励你们打破常规，尝试新的相处模式，或是共同开启一段新的冒险。不要过度分析未来的走向，享受当下的心动与纯粹的快乐。去爱吧，就像从未受过伤一样。",
+                        career: "A new job opportunity or a fresh start. Trust your instincts and try something unconventional.",
+                        career_zh:
+                            "在事业上，你可能正面临一个全新的起点或转折。这可能是一个创业的机会，或是一个从未涉足过的领域。现在的你拥有初生牛犊不怕虎的勇气，这是你最大的资产。不要被传统的规则所束缚，尝试用非传统的方法去解决问题。虽然周围可能会有质疑的声音，但只要你保持信念，你的创新思维将为你打开一扇通往成功的大门。",
+                        wealth: "Financial opportunities may appear unexpectedly. Take a calculated risk.",
+                        wealth_zh:
+                            "财运方面，机会往往隐藏在看似冒险的选择中。现在不是保守储蓄的时候，而是寻找新投资渠道的时机。当然，愚人也提醒我们要避免盲目，但对于那些让你直觉感到兴奋的项目，不妨大胆一试。保持对金钱流动的开放态度，意外之财可能正通过意想不到的方式向你走来。",
+                    },
+                    guidance:
+                        "Trust the universe. Take that first step, even if you don't know where it leads. Your innocence is your protection.",
+                    guidance_zh:
+                        "相信宇宙的安排。勇敢地迈出那第一步，即使你看不清前方的道路。你的纯真与信念是你最强大的护身符。现在的每一次冒险，都是未来智慧的种子。",
                 },
-                guidance: "Trust the universe. Take that first step, even if you don't know where it leads. Your innocence is your protection.",
-                guidance_zh: "相信宇宙的安排。迈出那第一步，即使你不知道它通向何方。你的纯真就是你最好的护身符，勇敢前行吧。"
-            },
-            { 
-                id: 1, name: "The Magician", name_zh: "魔术师", icon: "fa-hand-sparkles", 
-                keywords: ["Manifestation", "Power", "Action", "Skill"],
-                keywords_zh: ["显化", "力量", "行动", "技能"],
-                meanings: {
-                    general: "You have all the tools and resources you need to succeed. The Magician is the bridge between the spiritual and the physical world.",
-                    general_zh: "你拥有成功所需的一切工具和资源。魔术师是精神世界与物质世界之间的桥梁，现在是将想法转化为现实的最佳时机。",
-                    love: "You have the power to attract the partner you desire. Communication is your strongest asset right now.",
-                    love_zh: "你有能力吸引你渴望的伴侣。沟通是你现在最强大的资产，主动表达你的心意，你会得到回应。",
-                    career: "It's time to act. Use your skills and willpower to get what you want. You are in a position of influence.",
-                    career_zh: "是时候行动了。利用你的技能和意志力去争取你想要的。你正处于一个具有影响力的位置，不要浪费你的才华。",
-                    wealth: "Use your creativity to generate new income streams. You are resourceful.",
-                    wealth_zh: "利用你的创造力开辟新的收入来源。你足智多谋，现在的点子很可能变成金子。"
+                {
+                    id: 1,
+                    name: "The Magician",
+                    name_zh: "魔术师",
+                    icon: "fa-hand-sparkles",
+                    keywords: ["Manifestation", "Power", "Action", "Skill"],
+                    keywords_zh: ["显化力量", "掌控全局", "创造力", "资源整合"],
+                    meanings: {
+                        general:
+                            "You have all the tools and resources you need to succeed. The Magician is the bridge between the spiritual and physical.",
+                        general_zh:
+                            "魔术师是塔罗牌中的第一张牌，代表着阳性的创造力量与显化能力。你看，桌面上摆放着权杖（火）、圣杯（水）、宝剑（风）和星币（土），这意味着你已经拥有了达成目标所需的一切资源。现在不是等待的时候，而是行动的时刻。你拥有将无形的想法转化为有形现实的能力。你的专注力、意志力和沟通技巧正处于巅峰状态，只要你下定决心，宇宙就会响应你的召唤。",
+                        love: "You have the power to attract the partner you desire. Communication is your strongest asset right now.",
+                        love_zh:
+                            "在爱情中，魔术师象征着主动与吸引力。如果你正在寻找伴侣，现在是你散发魅力的最佳时机，你的自信和幽默感无人能挡。利用你的沟通技巧去表达你的心意，不要害羞。对于有伴侣的人来说，这也是一个通过共同创造来加深关系的好时机，比如一起规划未来或开始一个新的共同爱好。记住，你是这段关系魔法的创造者。",
+                        career: "It's time to act. Use your skills and willpower to get what you want. You are in a position of influence.",
+                        career_zh:
+                            "职场上，魔术师是一张极佳的牌。它表明你正处于一个能够施展才华、掌控局面的位置。你的多才多艺和灵活应变能力将让你在项目中脱颖而出。这是一个适合展示自我、推销想法或启动新项目的时刻。你不仅有能力完成任务，还能巧妙地整合周围的人力与物力资源。保持专注，你的野心将得到满足。",
+                        wealth: "Use your creativity to generate new income streams. You are resourceful.",
+                        wealth_zh:
+                            "在财富方面，魔术师提示你利用自己的技能和创意来创造财富。你拥有“点石成金”的潜力。也许是时候将你的某个爱好转化为副业，或者利用你的专业知识进行变现。只要你灵活运用手中的资源，并付诸实际行动，金钱的能量将顺畅地流向你。",
+                    },
+                    guidance: "Concentrate your willpower. Make it happen. The universe is waiting for your command.",
+                    guidance_zh:
+                        "集中你的意志力，“如其在上，如其在下”。你是自己命运的编剧与导演，拿起你的魔杖，让奇迹发生吧。",
                 },
-                guidance: "Concentrate your willpower. Make it happen. The universe is waiting for your command.",
-                guidance_zh: "集中你的意志力。让它发生。宇宙正等待着你的指令，你是自己命运的创造者。"
-            },
-            {
-                id: 2, name: "The High Priestess", name_zh: "女祭司", icon: "fa-scroll",
-                keywords: ["Intuition", "Mystery", "Subconscious", "Inner Voice"],
-                keywords_zh: ["直觉", "神秘", "潜意识", "内在声音"],
-                meanings: {
-                    general: "It is a time to retreat and trust your intuition. Not everything needs to be known logically right now.",
-                    general_zh: "现在是退一步并信任直觉的时候。并不是所有事情都需要现在用逻辑去解释。静下心来，答案在风中。",
-                    love: "Look beyond the surface. A mysterious attraction or a connection that defies logic is possible.",
-                    love_zh: "看透表面。一段神秘的吸引力或超越逻辑的连接是可能的。不要急于推进，感受对方灵魂的频率。",
-                    career: "Trust your gut feeling about a business partner or opportunity. Keep your plans secret for now.",
-                    career_zh: "相信你对商业伙伴或机会的直觉。暂时保密你的计划，现在不是大张旗鼓的时候。",
-                    wealth: "Listen to your inner guidance regarding investments. Avoid impulsive decisions.",
-                    wealth_zh: "关于投资，听从你内在的指引。避免冲动决策，有时候不行动就是最好的行动。"
+                {
+                    id: 2,
+                    name: "The High Priestess",
+                    name_zh: "女祭司",
+                    icon: "fa-scroll",
+                    keywords: ["Intuition", "Mystery", "Subconscious", "Inner Voice"],
+                    keywords_zh: ["内在直觉", "潜意识", "静默智慧", "神秘面纱"],
+                    meanings: {
+                        general:
+                            "It is a time to retreat and trust your intuition. Not everything needs to be known logically right now.",
+                        general_zh:
+                            "女祭司端坐在黑白双柱之间，身后是隐秘的帷幕。她代表着阴性的智慧、直觉和潜意识的深海。这张牌出现时，是在提醒你暂停外在的忙碌，转向内在的探索。并不是所有问题都能通过逻辑和理性来解答，有些答案藏在你的梦境、直觉和第六感之中。保持静默，观察那些微妙的信号。这是一个学习、冥想和精神成长的时刻，信任你内在的声音。",
+                        love: "Look beyond the surface. A mysterious attraction or a connection that defies logic is possible.",
+                        love_zh:
+                            "感情上，女祭司暗示着一种深层的心灵连接，甚至带有某种宿命感。如果你是单身，可能会被一个气质神秘、内敛的人所吸引，这种吸引力超越了外貌或物质。对于关系中的人，这张牌提示你们之间可能存在未表达的情感或秘密。与其通过言语争辩，不如尝试用心灵去感应对方的需求。有时候，无声的陪伴比千言万语更有力量。",
+                        career: "Trust your gut feeling about a business partner or opportunity. Keep your plans secret for now.",
+                        career_zh:
+                            "在工作中，女祭司建议你保持低调和观察。现在可能不是大张旗鼓行动的时候，而是筹备和等待时机的阶段。对于某些商业机会或合作伙伴，如果你的直觉感到不安，请务必重视这种感觉，即使逻辑上看起来无懈可击。同时，这张牌也可能暗示你需要进一步深造或学习专业知识，以提升内在的竞争力。",
+                        wealth: "Listen to your inner guidance regarding investments. Avoid impulsive decisions.",
+                        wealth_zh:
+                            "关于财运，女祭司提醒你依靠直觉而非市场噪音。对于投资决策，如果感到犹豫，那就先按兵不动。可能有一些你尚未知晓的隐藏信息或风险。保持冷静，不要被表面的繁荣所迷惑，等待局势更加明朗后再做决定是明智之举。",
+                    },
+                    guidance:
+                        "Silence your mind and listen to the wisdom within. The answers you seek are already inside you.",
+                    guidance_zh:
+                        "让喧嚣的大脑安静下来，答案不在外界，而正如月光倒映在水中一般，存在于你的内心深处。静心，即是看见。",
                 },
-                guidance: "Silence your mind and listen to the wisdom within. The answers you seek are already inside you.",
-                guidance_zh: "让大脑安静下来，倾听内在的智慧。你寻找的答案已经在你心中。"
-            },
-            {
-                id: 6, name: "The Lovers", name_zh: "恋人", icon: "fa-heart",
-                keywords: ["Love", "Harmony", "Choices", "Alignment"],
-                keywords_zh: ["爱", "和谐", "选择", "价值观一致"],
-                meanings: {
-                    general: "A symbol of deep connection and harmony. It also represents a major choice that must be made from the heart.",
-                    general_zh: "象征深层的连接与和谐。它也代表必须从心出发做出的重大选择。这是一张关于结合与决定的牌。",
-                    love: "A powerful soulmate connection. Intense attraction and mutual understanding.",
-                    love_zh: "强大的灵魂伴侣连接。强烈的吸引力和相互理解。你们的关系正处于极佳的状态。",
-                    career: "A partnership or merger is favorable. Ensure your career aligns with your personal values.",
-                    career_zh: "合作或合并是有利的。确保你的职业道路与你的个人价值观保持一致。",
-                    wealth: "Joint financial decisions are highlighted. Balance your budget with your desires.",
-                    wealth_zh: "强调共同的财务决策。在预算和欲望之间找到平衡。"
+                {
+                    id: 6,
+                    name: "The Lovers",
+                    name_zh: "恋人",
+                    icon: "fa-heart",
+                    keywords: ["Love", "Harmony", "Choices", "Alignment"],
+                    keywords_zh: ["真爱", "和谐统一", "重大抉择", "价值观契合"],
+                    meanings: {
+                        general:
+                            "A symbol of deep connection and harmony. It also represents a major choice that must be made from the heart.",
+                        general_zh:
+                            "恋人牌不仅仅代表爱情，它更深层的含义是“选择”与“结合”。伊甸园中的亚当与夏娃象征着二元性的统一，意识与潜意识的沟通。这张牌出现，意味着你正面临一个重要的人生路口，这个选择不仅关乎利弊，更关乎你的价值观和真实的自我。它预示着和谐、美好的人际关系，以及在道德和精神层面上的高度契合。",
+                        love: "A powerful soulmate connection. Intense attraction and mutual understanding.",
+                        love_zh:
+                            "在爱情占卜中，这无疑是一张极好的牌。它预示着一段充满激情、理解与和谐的关系。如果是单身，你可能会遇到那个让你感到“完整”的人，一种灵魂伴侣般的深刻连接。对于情侣，这意味着你们的关系将进入更深层次的承诺阶段。但同时，它也可能暗示你需要在两段关系或两种情感模式中做出遵从内心的选择。",
+                        career: "A partnership or merger is favorable. Ensure your career aligns with your personal values.",
+                        career_zh:
+                            "事业上，恋人牌强调合作与团队精神。你可能会遇到志同道合的合作伙伴，或者加入一个氛围融洽的团队。此时通过沟通和协作能达成双赢的局面。此外，这张牌也提示你在做职业选择时，要忠于自己的热情和价值观。不要仅仅为了金钱而工作，选择那份能让你感到快乐和有意义的事业。",
+                        wealth: "Joint financial decisions are highlighted. Balance your budget with your desires.",
+                        wealth_zh:
+                            "财运方面，恋人牌通常涉及合作生财。与信任的人共同投资或经营可能会带来不错的收益。同时，这也代表在消费观念上的选择——是追求短期的物质享受，还是长期的财务健康？在做财务决策时，听从直觉并确保其符合你的长期生活目标。",
+                    },
+                    guidance: "Choose what makes you feel whole. Follow your heart, but take your brain with you.",
+                    guidance_zh:
+                        "在每一个分岔路口，选择那条让你感到完整的道路。跟随你的心，因为只有爱（对自己和对世界）才能指引正确的方向。",
                 },
-                guidance: "Choose what makes you feel whole. Follow your heart, but take your brain with you.",
-                guidance_zh: "选择让你感到完整的事物。跟随你的心，但也带上你的理智。"
-            },
-            {
-                id: 9, name: "The Hermit", name_zh: "隐士", icon: "fa-lantern",
-                keywords: ["Soul-searching", "Introspection", "Solitude", "Guidance"],
-                keywords_zh: ["灵魂探索", "内省", "独处", "指引"],
-                meanings: {
-                    general: "You are being called to step back from the noise of the world and find the light within yourself.",
-                    general_zh: "你被召唤从世界的喧嚣中退一步，在自己内心寻找光亮。这是一段孤独但必要的旅程。",
-                    love: "A period of being single or taking space in a relationship to understand your own needs better.",
-                    love_zh: "一段单身时期，或者在关系中留出空间，以便更好地理解自己的需求。先爱自己，才能爱别人。",
-                    career: "Focus on your own tasks. It might be time to specialize or deepen your knowledge rather than expanding.",
-                    career_zh: "专注于你自己的任务。可能是时候深化你的专业知识，而不是盲目扩张。深耕细作。",
-                    wealth: "Be frugal and prudent. It is not a time for gambling or high risks.",
-                    wealth_zh: "节俭和谨慎。现在不是赌博或冒高风险的时候。"
+                {
+                    id: 9,
+                    name: "The Hermit",
+                    name_zh: "隐士",
+                    icon: "fa-lantern",
+                    keywords: ["Soul-searching", "Introspection", "Solitude", "Guidance"],
+                    keywords_zh: ["内省探索", "独处", "智慧指引", "寻找真理"],
+                    meanings: {
+                        general:
+                            "You are being called to step back from the noise of the world and find the light within yourself.",
+                        general_zh:
+                            "隐士身披灰袍，手提真理之灯，独自站在冰雪覆盖的山顶。这不是关于孤独，而是关于“独处”的力量。世界太嘈杂了，这张牌呼唤你暂时从人群和琐事中抽离出来，向内寻找答案。这是一段自我发现的旅程，只有在寂静中，你才能听清灵魂的低语。现在的停滞并非倒退，而是为了积蓄力量，看清前路。",
+                        love: "A period of being single or taking space in a relationship to understand your own needs better.",
+                        love_zh:
+                            "在感情中，隐士可能意味着一段暂时的冷淡期或分离，但这并非坏事。这是一段审视自我需求的时间。如果你是单身，与其急于寻找伴侣，不如先学会享受独处，完善自我。对于有伴侣的人，也许你们需要给彼此一些空间，去思考这段关系的真正意义。成熟的爱，源于两个独立而完整的灵魂。",
+                        career: "Focus on your own tasks. It might be time to specialize or deepen your knowledge rather than expanding.",
+                        career_zh:
+                            "职场上，隐士建议你专注于深耕。现在不是盲目扩张或频繁社交的时候，而是潜心研究、打磨技能的最佳时机。你可能会扮演导师的角色，或者需要向一位更有经验的前辈请教。在这个阶段，耐心和专注是你的武器。不要急于求成，踏实的积累将为你赢得长久的尊重和权威。",
+                        wealth: "Be frugal and prudent. It is not a time for gambling or high risks.",
+                        wealth_zh:
+                            "财运方面，隐士提倡极简和审慎。现在不适合高风险的投机行为。重新审视你的消费习惯，剥离那些不必要的物质欲望。通过理性的规划和节俭，你能积累起稳固的财富。记住，真正的富足来源于内心的安宁，而非外在的炫耀。",
+                    },
+                    guidance: "Shine your light inward. The wisdom you need comes from solitude and reflection.",
+                    guidance_zh:
+                        "点亮你心中的灯，照亮内在的幽暗角落。你所寻找的导师和答案，其实一直都在你自己身体里。享受这份孤独的馈赠吧。",
                 },
-                guidance: "Shine your light inward. The wisdom you need comes from solitude and reflection.",
-                guidance_zh: "将光芒照向内心。你所需的智慧来自独处和反思。"
-            },
-            {
-                id: 10, name: "Wheel of Fortune", name_zh: "命运之轮", icon: "fa-dharmachakra",
-                keywords: ["Good Luck", "Karma", "Cycles", "Turning Point"],
-                keywords_zh: ["好运", "业力", "循环", "转折点"],
-                meanings: {
-                    general: "The wheel turns. Change is inevitable, and fortune favors you now. Be ready for ups and downs.",
-                    general_zh: "命运之轮在转动。变化是不可避免的，现在运气站在你这一边。准备好迎接起起落落。",
-                    love: "Fate is playing a hand in your love life. A chance meeting or a sudden shift in relationship dynamics.",
-                    love_zh: "命运正在干预你的爱情生活。一次偶遇或关系动态的突然转变即将发生。",
-                    career: "Unexpected opportunities. The tide is turning in your favor. Seize the moment.",
-                    career_zh: "意想不到的机会。潮流正转向对你有利的方向。抓住这一刻。",
-                    wealth: "Financial luck is improving. A good time for calculated risks.",
-                    wealth_zh: "财运正在好转。是进行经过计算的风险投资的好时机。"
+                {
+                    id: 10,
+                    name: "Wheel of Fortune",
+                    name_zh: "命运之轮",
+                    icon: "fa-dharmachakra",
+                    keywords: ["Good Luck", "Karma", "Cycles", "Turning Point"],
+                    keywords_zh: ["命运流转", "契机", "业力循环", "意外好运"],
+                    meanings: {
+                        general:
+                            "The wheel turns. Change is inevitable, and fortune favors you now. Be ready for ups and downs.",
+                        general_zh:
+                            "命运之轮不停转动，象征着世间万物的无常与循环。这张牌的出现，预示着一个关键的转折点即将到来。改变是不可避免的，而且通常是来自外部的力量，非人力所能控制。现在，好运似乎站在了你这一边，无论过去如何，新的篇章正在开启。顺应这股变化的洪流，不要抗拒，因为这正是命运给你的礼物。",
+                        love: "Fate is playing a hand in your love life. A chance meeting or a sudden shift in relationship dynamics.",
+                        love_zh:
+                            "在爱情里，命运之轮带来了宿命般的相遇。单身者可能会在意外的场合遇到那个“对的人”，一切发生得如此自然又巧合。对于有伴侣的人，关系可能会经历一些波动或转折，但这将推动你们走向下一个阶段。这是一个由缘分主导的时刻，请保持开放的心态，接受并享受这突如其来的惊喜。",
+                        career: "Unexpected opportunities. The tide is turning in your favor. Seize the moment.",
+                        career_zh:
+                            "事业上，这是机遇与改变并存的时刻。你可能会面临职位的变动、突如其来的项目机会，甚至是行业的重新洗牌。之前停滞不前的事情可能会突然有了转机。此时，灵活应变比固守成规更重要。抓住稍纵即逝的机会，顺势而为，你将乘风破浪，到达新的高度。",
+                        wealth: "Financial luck is improving. A good time for calculated risks.",
+                        wealth_zh:
+                            "财运正在上扬，命运之轮带来了意外的收获。这可能是一笔奖金、投资的回报，或是发现了一个新的商机。虽然运气在其中占了很大成分，但也要懂得见好就收。金钱也是一种能量流，保持慷慨和感恩，能让这种丰盛的循环持续得更久。",
+                    },
+                    guidance: "Go with the flow. Adaptability is your greatest strength right now.",
+                    guidance_zh:
+                        "万物皆有周期，顺其自然。当命运的风吹起时，调整你的风帆，而不是筑起高墙。现在的你，拥有化变动为机遇的智慧。",
                 },
-                guidance: "Go with the flow. Adaptability is your greatest strength right now.",
-                guidance_zh: "顺其自然。适应能力是你现在最大的力量。不要抗拒改变。"
-            },
-            {
-                id: 13, name: "Death", name_zh: "死神", icon: "fa-skull",
-                keywords: ["Endings", "Transformation", "Transition", "Letting Go"],
-                keywords_zh: ["结束", "转变", "过渡", "放手"],
-                meanings: {
-                    general: "Not physical death, but the end of a major phase. Something must end for something new to begin.",
-                    general_zh: "不是肉体的死亡，而是一个重要阶段的结束。旧的不去，新的不来。这是一种彻底的蜕变。",
-                    love: "A relationship may be ending or transforming significantly. Let go of past attachments.",
-                    love_zh: "一段关系可能正在结束或发生重大转变。放手过去的依恋，才能迎接新生。",
-                    career: "A job loss or a voluntary departure. It is time for a completely new career path.",
-                    career_zh: "失业或自愿离职。是时候走上一条全新的职业道路了。",
-                    wealth: "A financial loss may occur, forcing you to rethink your relationship with money.",
-                    wealth_zh: "可能会发生财务损失，迫使你重新思考你与金钱的关系。"
+                {
+                    id: 13,
+                    name: "Death",
+                    name_zh: "死神",
+                    icon: "fa-skull",
+                    keywords: ["Endings", "Transformation", "Transition", "Letting Go"],
+                    keywords_zh: ["结束与新生", "彻底蜕变", "断舍离", "涅槃"],
+                    meanings: {
+                        general:
+                            "Not physical death, but the end of a major phase. Something must end for something new to begin.",
+                        general_zh:
+                            "死神牌往往让人恐惧，但它在塔罗中极少代表肉体的消亡，更多象征着精神层面的“彻底转化”。就像凤凰涅槃，必须先有灰烬，才有重生。这张牌预示着一个旧阶段的彻底结束，某种不再服务于你最高利益的事物（习惯、关系、信念）必须被清除。虽然过程可能伴随着阵痛和不舍，但这正是黎明前最黑暗的时刻，新的生机正在孕育。",
+                        love: "A relationship may be ending or transforming significantly. Let go of past attachments.",
+                        love_zh:
+                            "在感情上，死神牌意味着一段关系走到了尽头，或者是关系模式的彻底改变。这可能是一次分手，但也可能是一次深刻的和解与重生——结束旧有的争吵与隔阂，以全新的姿态相爱。如果你正执着于一段无望的感情，这张牌在劝你放手。只有腾出双手，你才能拥抱真正属于你的幸福。",
+                        career: "A job loss or a voluntary departure. It is time for a completely new career path.",
+                        career_zh:
+                            "职业生涯中，你可能面临离职、转行或公司的重大重组。这也许是被迫的，也可能是你主动的选择。无论如何，不要试图挽留那些已经枯萎的机会。这扇门的关闭，是为了让你看见另一扇敞开的窗。这是一个彻底转型的契机，去追寻你真正渴望的职业道路吧。",
+                        wealth: "A financial loss may occur, forcing you to rethink your relationship with money.",
+                        wealth_zh:
+                            "财运方面，可能会经历损失或收入来源的断裂。这提醒你重新审视自己的财务状况和金钱观念。也许你过去过于依赖某种不稳定的收入，或者消费习惯不健康。这是一个止损和重构财务地基的时刻。哪怕从零开始，建立在正确观念上的财富大厦将更加稳固。",
+                    },
+                    guidance:
+                        "Embrace the change. Do not resist the inevitable. Transformation is painful but necessary.",
+                    guidance_zh:
+                        "不要抗拒结束，因为那也是开始。就像落叶归根滋养大地，放手那些不再属于你的，让生命之流带你去往该去的地方。拥抱这种蜕变。",
                 },
-                guidance: "Embrace the change. Do not resist the inevitable. Transformation is painful but necessary.",
-                guidance_zh: "拥抱变化。不要抗拒不可避免的事情。蜕变虽然痛苦，但却是重生的必经之路。"
-            },
-            {
-                id: 19, name: "The Sun", name_zh: "太阳", icon: "fa-sun",
-                keywords: ["Positivity", "Success", "Vitality", "Joy"],
-                keywords_zh: ["积极", "成功", "活力", "喜悦"],
-                meanings: {
-                    general: "The best card in the deck. It radiates positivity, warmth, and success. Everything is becoming clear.",
-                    general_zh: "塔罗牌中最好的牌之一。它散发着积极、温暖和成功的光芒。一切都变得清晰明朗。",
-                    love: "A relationship full of joy, harmony, and openness. Marriage or celebration.",
-                    love_zh: "一段充满喜悦、和谐和开放的关系。可能预示着庆祝或更进一步的承诺。",
-                    career: "Public recognition, success, and clarity in your goals. You are shining.",
-                    career_zh: "公众的认可、成功以及目标的清晰。你在职场中正闪闪发光。",
-                    wealth: "Abundance and prosperity. Investments pay off.",
-                    wealth_zh: "富足和繁荣。之前的努力和投资开始得到回报。"
+                {
+                    id: 19,
+                    name: "The Sun",
+                    name_zh: "太阳",
+                    icon: "fa-sun",
+                    keywords: ["Positivity", "Success", "Vitality", "Joy"],
+                    keywords_zh: ["光明", "成功", "喜悦", "生命力"],
+                    meanings: {
+                        general:
+                            "The best card in the deck. It radiates positivity, warmth, and success. Everything is becoming clear.",
+                        general_zh:
+                            "太阳是塔罗牌中最积极、最充满正能量的牌。它象征着无尽的光明、温暖和生命力。阴霾散去，一切真相和道路都清晰可见。这张牌代表着纯粹的喜悦、成功和成就感。就像骑着白马的孩童，你重新找回了内心的纯真与快乐。无论你之前经历了什么，此刻都是庆祝和享受生命馈赠的时候。",
+                        love: "A relationship full of joy, harmony, and openness. Marriage or celebration.",
+                        love_zh:
+                            "爱情运势极佳！太阳预示着一段公开、诚实且充满欢笑的关系。没有猜忌，只有相互的支持与温暖。对于正在恋爱的人，这可能意味着订婚、结婚或迎来新生命等喜事。对于单身者，你阳光般的气场将吸引到同样积极乐观的伴侣。去爱吧，并在爱中闪闪发光。",
+                        career: "Public recognition, success, and clarity in your goals. You are shining.",
+                        career_zh:
+                            "在事业上，你的努力终于被看见了。太阳牌代表着成功、荣誉和公众的认可。你的项目将顺利推进，目标清晰明确。你充满了自信和创造力，能够激励周围的人。这不仅是职位的晋升，更是自我价值的实现。如果你从事创意或展示类工作，现在是你发光发热的最佳舞台。",
+                        wealth: "Abundance and prosperity. Investments pay off.",
+                        wealth_zh:
+                            "财运亨通，富足而丰盛。太阳不仅代表物质上的收益，更代表心态上的富足。你的投资开始获得回报，收入稳步增长。这也是一个适合慷慨解囊、与他人分享财富的时刻，因为给予会带来更多的能量回流。享受你的劳动成果吧，这是你应得的奖赏。",
+                    },
+                    guidance: "Let your light shine. Be confident and share your joy with others.",
+                    guidance_zh:
+                        "你就是光本身。毫无保留地展现你的才华与热情，你的快乐具有感染力，能够照亮周围的世界。保持自信，因为你是被宇宙深爱着的。",
                 },
-                guidance: "Let your light shine. Be confident and share your joy with others.",
-                guidance_zh: "让你的光芒闪耀。保持自信，与他人分享你的喜悦。你是被祝福的。"
-            }
-        ];
-
-        /* --- State Management --- */
-        let state = {
-            lang: 'en',
-            category: null,
-            card: null,
-            isSpread: false
-        };
-
-        /* --- Animations & Effects --- */
-        function initStars() {
-            const container = document.getElementById('stars-container');
-            container.innerHTML = '';
-            for(let i=0; i<80; i++) {
-                const star = document.createElement('div');
-                star.style.position = 'absolute';
-                star.style.background = 'white';
-                star.style.borderRadius = '50%';
-                const size = Math.random() * 2 + 1;
-                star.style.width = `${size}px`;
-                star.style.height = `${size}px`;
-                star.style.left = `${Math.random() * 100}%`;
-                star.style.top = `${Math.random() * 100}%`;
-                star.style.opacity = Math.random() * 0.7;
-                star.style.animation = `pulse ${Math.random() * 3 + 2}s infinite ease-in-out ${Math.random()*2}s`;
-                container.appendChild(star);
-            }
-        }
-
-        /* --- Logic Flow --- */
-        
-        async function startVerification() {
-            const scanner = document.getElementById('scanner');
-            const text = document.getElementById('verify-text');
-            const t = i18n[state.lang] || i18n.en;
-
-            scanner.classList.remove('hidden');
-            text.innerHTML = `<span class="animate-pulse text-purple-200">${t.verify}</span>`; /* Use translated verify text */
-            text.classList.add('text-shadow-glow');
-            
-            // Verification simulated delay
-            await new Promise(r => setTimeout(r, 2200));
-            
-            text.classList.add('text-gold');
-            text.classList.remove('text-purple-400');
-            text.innerHTML = `<i class="fa-solid fa-check-circle"></i> ${t.verified}`; /* Use translated verified text */
-            scanner.classList.add('hidden');
-            
-            await new Promise(r => setTimeout(r, 800));
-            switchScreen('screen-login', 'screen-language');
-            renderLanguages();
-        }
-
-        function renderLanguages() {
-            const container = document.querySelector('#screen-language .grid');
-            container.innerHTML = '';
-            
-            const languages = [
-                {code: 'zh', name: '中文', sub: 'Chinese'},
-                {code: 'en', name: 'English', sub: 'Universal'},
-                {code: 'kr', name: '한국어', sub: 'Korean'},
-                {code: 'jp', name: '日本語', sub: 'Japanese'},
-                {code: 'fr', name: 'Français', sub: 'French'},
-                {code: 'es', name: 'Español', sub: 'Spanish'},
             ];
 
-            // Set default language to Chinese if it hasn't been set
-            if (!state.lang || !i18n[state.lang]) {
-                state.lang = 'zh';
+            /* --- State Management --- */
+            let state = {
+                lang: "en",
+                category: null,
+                card: null,
+                isSpread: false,
+            };
+
+            /* --- Animations & Effects --- */
+            function initStars() {
+                const container = document.getElementById("stars-container");
+                container.innerHTML = "";
+                for (let i = 0; i < 80; i++) {
+                    const star = document.createElement("div");
+                    star.style.position = "absolute";
+                    star.style.background = "white";
+                    star.style.borderRadius = "50%";
+                    const size = Math.random() * 2 + 1;
+                    star.style.width = `${size}px`;
+                    star.style.height = `${size}px`;
+                    star.style.left = `${Math.random() * 100}%`;
+                    star.style.top = `${Math.random() * 100}%`;
+                    star.style.opacity = Math.random() * 0.7;
+                    star.style.animation = `pulse ${Math.random() * 3 + 2}s infinite ease-in-out ${Math.random() * 2}s`;
+                    container.appendChild(star);
+                }
             }
 
-            languages.forEach(l => {
-                const btn = document.createElement('button');
-                btn.className = "btn-mystic flex flex-col items-center justify-center p-4 rounded-xl";
-                btn.onclick = () => setLanguage(l.code);
-                btn.innerHTML = `
+            /* --- Logic Flow --- */
+
+            async function startVerification() {
+                const scanner = document.getElementById("scanner");
+                const text = document.getElementById("verify-text");
+                const t = i18n[state.lang] || i18n.en;
+
+                scanner.classList.remove("hidden");
+                text.innerHTML = `<span class="animate-pulse text-purple-200">${t.verify}</span>`;
+                text.classList.add("text-shadow-glow");
+
+                await new Promise((r) => setTimeout(r, 2200));
+
+                text.classList.add("text-gold");
+                text.classList.remove("text-purple-400");
+                text.innerHTML = `<i class="fa-solid fa-check-circle"></i> ${t.verified}`;
+                scanner.classList.add("hidden");
+
+                await new Promise((r) => setTimeout(r, 800));
+                switchScreen("screen-login", "screen-language");
+                renderLanguages();
+            }
+
+            function renderLanguages() {
+                const container = document.querySelector("#screen-language .grid");
+                container.innerHTML = "";
+
+                const languages = [
+                    { code: "zh", name: "中文", sub: "Chinese" },
+                    { code: "en", name: "English", sub: "Universal" },
+                    { code: "kr", name: "한국어", sub: "Korean" },
+                    { code: "jp", name: "日本語", sub: "Japanese" },
+                    { code: "fr", name: "Français", sub: "French" },
+                    { code: "es", name: "Español", sub: "Spanish" },
+                ];
+
+                if (!state.lang || !i18n[state.lang]) {
+                    state.lang = "zh";
+                }
+
+                languages.forEach((l) => {
+                    const btn = document.createElement("button");
+                    btn.className = "btn-mystic flex flex-col items-center justify-center p-4 rounded-xl";
+                    btn.onclick = () => setLanguage(l.code);
+                    btn.innerHTML = `
                     <span class="text-base font-display text-gray-200 group-hover:text-gold transition-colors relative z-10">${l.name}</span>
                     <span class="text-[9px] text-gray-500 uppercase tracking-widest mt-1 relative z-10">${l.sub}</span>
                 `;
-                container.appendChild(btn);
-            });
-        }
-
-        function setLanguage(code) {
-            state.lang = code;
-            switchScreen('screen-language', 'screen-category');
-            renderCategories();
-        }
-
-        function renderCategories() {
-            const t = i18n[state.lang];
-            const container = document.querySelector('#screen-category .grid');
-            document.getElementById('cat-title').textContent = t.selectCat;
-            container.innerHTML = '';
-
-            Object.entries(t.cats).forEach(([key, val]) => {
-                const btn = document.createElement('button');
-                btn.className = "flex flex-col items-center justify-center p-3 h-28 glass-panel rounded-xl hover:scale-105 transition-transform duration-300 group hover:border-gold/50";
-                btn.onclick = () => selectCategory(key);
-                btn.innerHTML = `
-                    <div class="w-10 h-10 rounded-full bg-purple-900/40 flex items-center justify-center mb-2 group-hover:bg-purple-800/60 transition-colors">
-                        <i class="fa-solid ${val.icon} text-xl text-purple-300 group-hover:text-gold transition-colors"></i>
-                    </div>
-                    <span class="text-[10px] font-bold text-gray-300 tracking-wider font-display uppercase group-hover:text-white">${val.label}</span>
-                `;
-                container.appendChild(btn);
-            });
-        }
-
-        function selectCategory(key) {
-            state.category = key;
-            state.isSpread = false;
-            
-            // Prepare table
-            document.getElementById('deck-stack').classList.remove('hidden');
-            document.getElementById('fan-container').classList.add('opacity-0', 'pointer-events-none');
-            document.getElementById('fan-container').innerHTML = '';
-            document.getElementById('reveal-stage').classList.add('hidden');
-            document.getElementById('table-instruction').textContent = i18n[state.lang].instruction_deck;
-            document.getElementById('table-sub').textContent = i18n[state.lang].instruction_deck; // Initial instruction is "Tap to shuffle/洗牌"
-            document.getElementById('btn-reset-label').textContent = i18n[state.lang].btn_reset;
-            
-            switchScreen('screen-category', 'screen-table');
-        }
-
-        function spreadCards() {
-            if(state.isSpread) return;
-            state.isSpread = true;
-
-            const deckStack = document.getElementById('deck-stack');
-            const fanContainer = document.getElementById('fan-container');
-            const instruction = document.getElementById('table-instruction');
-            const sub = document.getElementById('table-sub');
-
-            // Hide stack
-            deckStack.classList.add('hidden');
-
-            // Show fan container
-            fanContainer.classList.remove('opacity-0', 'pointer-events-none');
-            fanContainer.classList.add('spread-active'); // Add class for hover effect
-
-            // Update text to instruct drawing
-            instruction.textContent = i18n[state.lang].instruction_spread;
-            sub.textContent = i18n[state.lang].instruction_spread;
-
-            // App Size Config
-            const totalCards = 22;
-            const angleRange = 85; 
-            
-            for(let i=0; i<totalCards; i++) {
-                const card = document.createElement('div');
-                card.className = 'card-base'; // Removed animate-float to keep them fixed
-                
-                const progress = i / (totalCards - 1);
-                const angle = -angleRange/2 + (progress * angleRange);
-                const xOffset = (progress - 0.5) * 200; 
-                const yOffset = Math.abs(progress - 0.5) * 30;
-
-                // Set initial position far below
-                card.style.transform = `translateX(0px) translateY(100px) rotate(0deg)`;
-                card.innerHTML = `<div class="card-pattern-bg"></div>`;
-                
-                // Use a closure to capture the card index for unique interaction if needed
-                card.onclick = (e) => onCardClick(e, card);
-
-                fanContainer.appendChild(card);
-
-                // Animate to spread position
-                setTimeout(() => {
-                    card.style.transform = `translateX(${xOffset}px) translateY(${yOffset}px) rotate(${angle}deg)`;
-                }, 50 + (i * 30));
+                    container.appendChild(btn);
+                });
             }
 
-            // After spreading, enable pointer events on the cards
-            fanContainer.style.pointerEvents = 'auto'; 
-        }
+            function setLanguage(code) {
+                state.lang = code;
+                switchScreen("screen-language", "screen-category");
+                renderCategories();
+            }
 
-        function onCardClick(e, element) {
-            e.stopPropagation();
-            
-            // Disable further clicks
-            document.getElementById('fan-container').style.pointerEvents = 'none';
+            function renderCategories() {
+                const t = i18n[state.lang];
+                const container = document.querySelector("#screen-category .grid");
+                document.getElementById("cat-title").textContent = t.selectCat;
+                container.innerHTML = "";
 
-            // 1. Pick Data
-            const randomCard = tarotData[Math.floor(Math.random() * tarotData.length)];
-            const isUpright = Math.random() > 0.4; // 60% chance upright
-            state.card = { ...randomCard, isUpright };
+                const now = Date.now();
+                const cooldowns = JSON.parse(localStorage.getItem("lumina_cooldowns") || "{}");
 
-            // 2. Fade others
-            const allCards = document.querySelectorAll('.card-base');
-            allCards.forEach(c => {
-                if(c !== element) {
-                    c.style.opacity = '0';
-                    c.style.pointerEvents = 'none';
+                Object.entries(t.cats).forEach(([key, val]) => {
+                    const lastUsed = cooldowns[key] || 0;
+                    const diff = now - lastUsed;
+                    const isCooldown = diff < 3600000; // 1 hour in ms
+
+                    const btn = document.createElement("button");
+                    btn.className =
+                        "flex flex-col items-center justify-center p-3 h-28 glass-panel rounded-xl transition-all duration-300 group border border-purple-500/20";
+
+                    if (isCooldown) {
+                        const minutesLeft = Math.ceil((3600000 - diff) / 60000);
+                        btn.className += " opacity-50 cursor-not-allowed grayscale";
+                        btn.onclick = null;
+                        btn.innerHTML = `
+                        <div class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center mb-2">
+                            <i class="fa-solid fa-hourglass-half text-xl text-gray-500"></i>
+                        </div>
+                        <span class="text-[10px] font-bold text-gray-500 tracking-wider font-display uppercase">${t.cooldown}</span>
+                        <span class="text-[9px] text-red-400 mt-1">${minutesLeft}m</span>
+                    `;
+                    } else {
+                        btn.className += " hover:scale-105 hover:border-gold/50";
+                        btn.onclick = () => selectCategory(key);
+                        btn.innerHTML = `
+                        <div class="w-10 h-10 rounded-full bg-purple-900/40 flex items-center justify-center mb-2 group-hover:bg-purple-800/60 transition-colors">
+                            <i class="fa-solid ${val.icon} text-xl text-purple-300 group-hover:text-gold transition-colors"></i>
+                        </div>
+                        <span class="text-[10px] font-bold text-gray-300 tracking-wider font-display uppercase group-hover:text-white">${val.label}</span>
+                    `;
+                    }
+
+                    container.appendChild(btn);
+                });
+            }
+
+            function selectCategory(key) {
+                state.category = key;
+                state.isSpread = false;
+
+                document.getElementById("deck-stack").classList.remove("hidden");
+                document.getElementById("fan-container").classList.add("opacity-0", "pointer-events-none");
+                document.getElementById("fan-container").innerHTML = "";
+                document.getElementById("reveal-stage").classList.add("hidden");
+                document.getElementById("table-instruction").textContent = i18n[state.lang].instruction_deck;
+                document.getElementById("table-sub").textContent = i18n[state.lang].instruction_deck;
+                document.getElementById("btn-reset-label").textContent = i18n[state.lang].btn_reset;
+
+                switchScreen("screen-category", "screen-table");
+            }
+
+            function spreadCards() {
+                if (state.isSpread) return;
+                state.isSpread = true;
+
+                const deckStack = document.getElementById("deck-stack");
+                const fanContainer = document.getElementById("fan-container");
+                const instruction = document.getElementById("table-instruction");
+                const sub = document.getElementById("table-sub");
+
+                deckStack.classList.add("hidden");
+                fanContainer.classList.remove("opacity-0", "pointer-events-none");
+                fanContainer.classList.add("spread-active");
+
+                instruction.textContent = i18n[state.lang].instruction_spread;
+                sub.textContent = i18n[state.lang].instruction_spread;
+
+                const totalCards = 22;
+                const angleRange = 85;
+
+                for (let i = 0; i < totalCards; i++) {
+                    const card = document.createElement("div");
+                    card.className = "card-base";
+
+                    const progress = i / (totalCards - 1);
+                    const angle = -angleRange / 2 + progress * angleRange;
+                    const xOffset = (progress - 0.5) * 200;
+                    const yOffset = Math.abs(progress - 0.5) * 30;
+
+                    card.style.transform = `translateX(0px) translateY(100px) rotate(0deg)`;
+                    card.innerHTML = `<div class="card-pattern-bg"></div>`;
+
+                    card.onclick = (e) => onCardClick(e, card);
+
+                    fanContainer.appendChild(card);
+
+                    setTimeout(() => {
+                        card.style.transform = `translateX(${xOffset}px) translateY(${yOffset}px) rotate(${angle}deg)`;
+                    }, 50 + i * 30);
                 }
-            });
 
-            // 3. SPECIAL SPIN ANIMATION
-            // Remove transform logic that bound it to the fan and let class handle it
-            element.style.transform = "none"; 
-            element.classList.remove('spread-active'); // Remove hover effect
-            element.classList.add('card-spinning');
-
-            // 4. Burst Effect & Swap after spin
-            setTimeout(() => {
-                const burst = document.getElementById('burst-container');
-                burst.classList.add('bursting');
-                element.style.opacity = '0';
-                
-                showRevealStage();
-                
-                setTimeout(() => burst.classList.remove('bursting'), 1000);
-            }, 1800); // Wait for spin animation (~1.8s)
-        }
-
-        function showRevealStage() {
-            const stage = document.getElementById('reveal-stage');
-            const finalCard = document.getElementById('final-card');
-            const t = i18n[state.lang];
-            const c = state.card;
-            
-            stage.classList.remove('hidden');
-            
-            // Populate Visuals
-            // Handle Bilingual Name
-            const cardName = state.lang === 'zh' ? c.name_zh : c.name;
-            
-            document.getElementById('reveal-icon').className = `fa-solid ${c.icon} text-6xl gold-gradient-text mb-6 drop-shadow-[0_0_10px_rgba(212,175,55,0.8)] relative z-10`;
-            document.getElementById('reveal-name').textContent = cardName;
-            document.getElementById('reveal-pos').textContent = state.card.isUpright ? t.pos_up : t.pos_rev;
-
-            if(!state.card.isUpright) {
-                document.getElementById('reveal-icon').classList.add('rotate-180');
-            } else {
-                document.getElementById('reveal-icon').classList.remove('rotate-180');
+                fanContainer.style.pointerEvents = "auto";
             }
 
-            // Animate In
-            setTimeout(() => {
-                finalCard.classList.remove('opacity-0', 'scale-50');
-                finalCard.classList.add('scale-100');
-                
-                // Flip
+            function onCardClick(e, element) {
+                e.stopPropagation();
+                document.getElementById("fan-container").style.pointerEvents = "none";
+
+                const randomCard = tarotData[Math.floor(Math.random() * tarotData.length)];
+                const isUpright = Math.random() > 0.4;
+                state.card = { ...randomCard, isUpright };
+
+                const allCards = document.querySelectorAll(".card-base");
+                allCards.forEach((c) => {
+                    if (c !== element) {
+                        c.style.opacity = "0";
+                        c.style.pointerEvents = "none";
+                    }
+                });
+
+                element.style.transform = "none";
+                element.classList.remove("spread-active");
+                element.classList.add("card-spinning");
+
                 setTimeout(() => {
-                    finalCard.classList.add('flipped');
-                }, 400);
-            }, 50);
+                    const burst = document.getElementById("burst-container");
+                    burst.classList.add("bursting");
+                    element.style.opacity = "0";
 
-            // Go to Results
-            setTimeout(() => {
-                showResultScreen();
-            }, 3000);
-        }
+                    showRevealStage();
 
-        function showResultScreen() {
-            switchScreen('screen-table', 'screen-result');
-            const t = i18n[state.lang];
-            const c = state.card;
-
-            // Fill Header
-            document.getElementById('res-cat-label').textContent = t.cats[state.category].label;
-            document.getElementById('res-date').textContent = new Date().toLocaleDateString();
-            document.getElementById('res-pos').textContent = c.isUpright ? t.pos_up : t.pos_rev;
-            
-            // Fill Name
-            const cardName = state.lang === 'zh' ? c.name_zh : c.name;
-            document.getElementById('res-card-title').textContent = cardName;
-
-            // Fill Keywords
-            const kwContainer = document.getElementById('res-keywords');
-            kwContainer.innerHTML = '';
-            const keywords = state.lang === 'zh' ? c.keywords_zh : c.keywords;
-            keywords.forEach(k => {
-                const tag = document.createElement('span');
-                tag.className = "px-2 py-1 rounded bg-purple-500/20 border border-purple-500/30 text-[9px] text-purple-200 uppercase tracking-wide";
-                tag.textContent = k;
-                kwContainer.appendChild(tag);
-            });
-
-            // Fill Texts
-            document.getElementById('label-oracle').textContent = t.labels.oracle;
-            document.getElementById('res-guidance-label').textContent = t.labels.guidance;
-            document.getElementById('btn-again').textContent = t.btn_again;
-            
-            // Fill Creator Credit
-            document.getElementById('creator-credit').textContent = t.creator;
-
-            // Smart Meaning Selection
-            let mainMeaning = "";
-            let guidance = "";
-            
-            // Default English
-            if(state.lang === 'en') {
-                mainMeaning = c.meanings[state.category] || c.meanings.general;
-                guidance = c.guidance;
-            } 
-            // Rich Chinese
-            else if (state.lang === 'zh') {
-                mainMeaning = c.meanings[`${state.category}_zh`] || c.meanings.general_zh;
-                guidance = c.guidance_zh;
-            }
-            // Fallbacks for others (using English data but labeled in local lang for demo)
-            else {
-                mainMeaning = c.meanings[state.category] || c.meanings.general;
-                guidance = c.guidance;
+                    setTimeout(() => burst.classList.remove("bursting"), 1000);
+                }, 1800);
             }
 
-            // Add reverse nuance if needed
-            if (!c.isUpright) {
-                const revNote = state.lang === 'zh' ? "（逆位提示：能量可能受阻或需要更多内省） " : "(Reversed: Energy may be blocked or internal) ";
-                mainMeaning = revNote + mainMeaning;
+            function showRevealStage() {
+                const stage = document.getElementById("reveal-stage");
+                const finalCard = document.getElementById("final-card");
+                const t = i18n[state.lang];
+                const c = state.card;
+
+                stage.classList.remove("hidden");
+
+                const cardName = state.lang === "zh" ? c.name_zh : c.name;
+
+                document.getElementById(
+                    "reveal-icon"
+                ).className = `fa-solid ${c.icon} text-6xl gold-gradient-text mb-6 drop-shadow-[0_0_10px_rgba(212,175,55,0.8)] relative z-10`;
+                document.getElementById("reveal-name").textContent = cardName;
+                document.getElementById("reveal-pos").textContent = state.card.isUpright ? t.pos_up : t.pos_rev;
+
+                if (!state.card.isUpright) {
+                    document.getElementById("reveal-icon").classList.add("rotate-180");
+                } else {
+                    document.getElementById("reveal-icon").classList.remove("rotate-180");
+                }
+
+                setTimeout(() => {
+                    finalCard.classList.remove("opacity-0", "scale-50");
+                    finalCard.classList.add("scale-100");
+
+                    setTimeout(() => {
+                        finalCard.classList.add("flipped");
+                    }, 400);
+                }, 50);
+
+                setTimeout(() => {
+                    showResultScreen();
+                }, 3000);
             }
 
-            document.getElementById('res-text-main').textContent = mainMeaning;
-            document.getElementById('res-text-guidance').textContent = guidance;
-        }
+            function showResultScreen() {
+                // Save Cooldown
+                const cooldowns = JSON.parse(localStorage.getItem("lumina_cooldowns") || "{}");
+                cooldowns[state.category] = Date.now();
+                localStorage.setItem("lumina_cooldowns", JSON.stringify(cooldowns));
 
-        function resetApp() {
-            // Reset Reveal Card Visuals
-            const finalCard = document.getElementById('final-card');
-            finalCard.classList.remove('flipped', 'scale-100');
-            finalCard.classList.add('opacity-0', 'scale-50');
+                switchScreen("screen-table", "screen-result");
+                const t = i18n[state.lang];
+                const c = state.card;
 
-            // Reset State logic for returning to Language Select
-            state.category = null;
-            state.card = null;
-            state.isSpread = false;
-            
-            // Navigate back to Language
-            // If on result screen or table screen, go to Language
-            const currentScreen = document.getElementById('screen-result').classList.contains('hidden') ? 'screen-table' : 'screen-result';
-            
-            switchScreen(currentScreen, 'screen-language');
-        }
+                document.getElementById("res-cat-label").textContent = t.cats[state.category].label;
+                document.getElementById("res-date").textContent = new Date().toLocaleDateString();
+                document.getElementById("res-pos").textContent = c.isUpright ? t.pos_up : t.pos_rev;
 
-        function switchScreen(fromId, toId) {
-            const fromEl = document.getElementById(fromId);
-            const toEl = document.getElementById(toId);
-            
-            fromEl.classList.add('opacity-0');
-            fromEl.style.pointerEvents = 'none';
-            
-            setTimeout(() => {
-                fromEl.classList.add('hidden');
-                fromEl.classList.remove('opacity-0');
-                fromEl.style.pointerEvents = 'auto';
-                
-                toEl.classList.remove('hidden');
-                // reflow
-                void toEl.offsetWidth;
-                toEl.classList.add('animate-fade-in');
-            }, 500);
-        }
+                const cardName = state.lang === "zh" ? c.name_zh : c.name;
+                document.getElementById("res-card-title").textContent = cardName;
 
-        // Set default language to Chinese on initial load if not set
-        if (!state.lang || !i18n[state.lang]) {
-            state.lang = 'zh';
-        }
+                const kwContainer = document.getElementById("res-keywords");
+                kwContainer.innerHTML = "";
+                const keywords = state.lang === "zh" ? c.keywords_zh : c.keywords;
+                keywords.forEach((k) => {
+                    const tag = document.createElement("span");
+                    tag.className =
+                        "px-2 py-1 rounded bg-purple-500/20 border border-purple-500/30 text-[9px] text-purple-200 uppercase tracking-wide";
+                    tag.textContent = k;
+                    kwContainer.appendChild(tag);
+                });
 
-        window.onload = initStars;
+                document.getElementById("label-oracle").textContent = t.labels.oracle;
+                document.getElementById("res-guidance-label").textContent = t.labels.guidance;
+                document.getElementById("btn-again").textContent = t.btn_again;
 
-    </script>
-</body>
+                document.getElementById("creator-credit").textContent = t.creator;
+
+                let mainMeaning = "";
+                let guidance = "";
+
+                if (state.lang === "en") {
+                    mainMeaning = c.meanings[state.category] || c.meanings.general;
+                    guidance = c.guidance;
+                } else if (state.lang === "zh") {
+                    mainMeaning = c.meanings[`${state.category}_zh`] || c.meanings.general_zh;
+                    guidance = c.guidance_zh;
+                } else {
+                    mainMeaning = c.meanings[state.category] || c.meanings.general;
+                    guidance = c.guidance;
+                }
+
+                if (!c.isUpright) {
+                    const revNote =
+                        state.lang === "zh"
+                            ? "（逆位提示：能量可能受阻或需要更多内省） "
+                            : "(Reversed: Energy may be blocked or internal) ";
+                    mainMeaning = revNote + mainMeaning;
+                }
+
+                document.getElementById("res-text-main").textContent = mainMeaning;
+                document.getElementById("res-text-guidance").textContent = guidance;
+            }
+
+            function resetApp() {
+                const finalCard = document.getElementById("final-card");
+                finalCard.classList.remove("flipped", "scale-100");
+                finalCard.classList.add("opacity-0", "scale-50");
+
+                state.category = null;
+                state.card = null;
+                state.isSpread = false;
+
+                const currentScreen = document.getElementById("screen-result").classList.contains("hidden")
+                    ? "screen-table"
+                    : "screen-result";
+
+                switchScreen(currentScreen, "screen-category");
+
+                renderCategories();
+            }
+
+            function switchScreen(fromId, toId) {
+                const fromEl = document.getElementById(fromId);
+                const toEl = document.getElementById(toId);
+
+                fromEl.classList.add("opacity-0");
+                fromEl.style.pointerEvents = "none";
+
+                setTimeout(() => {
+                    fromEl.classList.add("hidden");
+                    fromEl.classList.remove("opacity-0");
+                    fromEl.style.pointerEvents = "auto";
+
+                    toEl.classList.remove("hidden");
+                    void toEl.offsetWidth;
+                    toEl.classList.add("animate-fade-in");
+                }, 500);
+            }
+
+            if (!state.lang || !i18n[state.lang]) {
+                state.lang = "zh";
+            }
+
+            window.onload = initStars;
+        </script>
+    </body>
 </html>
